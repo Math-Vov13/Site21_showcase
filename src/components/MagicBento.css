@@ -1,0 +1,276 @@
+/* ── MagicBento — member card grid ── */
+
+/* Grid layouts */
+.mb-card-grid {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+.mb-card-grid--default  { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+.mb-card-grid--founders { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+.mb-card-grid--alumni   { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+.mb-card-grid--staff    { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+
+/* ── Card base ── */
+.magic-bento-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  position: relative;
+  padding: 1.25rem 1.4rem 1.1rem 1.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.04) 0%, rgba(0, 0, 0, 0.25) 100%);
+  backdrop-filter: blur(4px);
+  overflow: hidden;
+  transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+
+  --glow-x: 50%;
+  --glow-y: 50%;
+  --glow-intensity: 0;
+  --glow-radius: 300px;
+}
+
+/* Left accent bar */
+.magic-bento-card::before {
+  content: '';
+  position: absolute;
+  top: 12px; left: 0; bottom: 12px;
+  width: 3px;
+  background: linear-gradient(to bottom, transparent, var(--mc, var(--red-primary)), transparent);
+  border-radius: 0 2px 2px 0;
+  opacity: 0.5;
+  transition: opacity 0.3s, top 0.3s, bottom 0.3s;
+  z-index: 1;
+}
+
+.magic-bento-card:hover {
+  border-color: color-mix(in srgb, var(--mc, #cc0000) 45%, rgba(255,255,255,0.1));
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.07) 0%, rgba(0, 0, 0, 0.2) 100%);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.35),
+    0 0 0 1px color-mix(in srgb, var(--mc, #cc0000) 20%, transparent);
+  transform: translateY(-2px);
+}
+.magic-bento-card:hover::before {
+  opacity: 1;
+  top: 6px;
+  bottom: 6px;
+}
+
+/* Alumni dim */
+.magic-bento-card--alumni {
+  opacity: 0.5;
+  background: rgba(0, 0, 0, 0.15);
+}
+.magic-bento-card--alumni:hover { opacity: 0.78; }
+
+/* Border glow (mask-composite) */
+.magic-bento-card--glow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: radial-gradient(
+    var(--glow-radius) circle at var(--glow-x) var(--glow-y),
+    rgba(var(--glow-color, 204 0 0), calc(var(--glow-intensity) * 0.4)) 0%,
+    rgba(var(--glow-color, 204 0 0), calc(var(--glow-intensity) * 0.15)) 45%,
+    transparent 70%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ── Particle ── */
+.mb-particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.mb-particle-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.mb-bento-section {
+  position: relative;
+  user-select: none;
+}
+
+/* ── Corner decoration ── */
+.mb-corner-bracket {
+  position: absolute;
+  top: 10px; right: 10px;
+  width: 12px; height: 12px;
+  border-top: 1.5px solid var(--mc, rgba(204, 0, 0, 0.5));
+  border-right: 1.5px solid var(--mc, rgba(204, 0, 0, 0.5));
+  border-radius: 0 4px 0 0;
+  opacity: 0.25;
+  pointer-events: none;
+  z-index: 3;
+  transition: opacity 0.3s, width 0.25s, height 0.25s;
+}
+.magic-bento-card:hover .mb-corner-bracket {
+  opacity: 0.6;
+  width: 18px;
+  height: 18px;
+}
+
+/* ── Card content ── */
+.mb-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  position: relative;
+  z-index: 3;
+}
+
+.mb-avatar {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display, sans-serif);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--mc, #cc0000);
+  background: color-mix(in srgb, var(--mc, #cc0000) 12%, rgba(0, 0, 0, 0.6));
+  border: 1.5px solid color-mix(in srgb, var(--mc, #cc0000) 40%, transparent);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.magic-bento-card:hover .mb-avatar {
+  box-shadow: 0 0 12px color-mix(in srgb, var(--mc, #cc0000) 30%, transparent);
+}
+.mb-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.mb-clearance {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 0.22em 0.5em;
+  align-self: flex-start;
+  white-space: nowrap;
+}
+
+.mb-meta {
+  position: relative;
+  z-index: 3;
+}
+
+.mb-name {
+  font-family: var(--font-header, sans-serif);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.92);
+  margin-bottom: 0.2rem;
+  letter-spacing: 0.01em;
+}
+
+.mb-role {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.63rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.mb-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  position: relative;
+  z-index: 3;
+}
+
+.mb-tag {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.58rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 4px;
+  padding: 0.18em 0.55em;
+}
+
+.mb-desc {
+  font-size: 0.76rem;
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.6;
+  margin: 0;
+  flex: 1;
+  position: relative;
+  z-index: 3;
+}
+
+.mb-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 0.7rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  position: relative;
+  z-index: 3;
+}
+
+.mb-date {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.58rem;
+  letter-spacing: 0.07em;
+  color: rgba(255, 255, 255, 0.22);
+}
+
+.mb-id {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.16);
+}
+
+.mb-alumni-badge {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 4px;
+  padding: 0.15em 0.5em;
+}
+
+/* ── Responsive ── */
+@media (max-width: 599px) {
+  .mb-card-grid,
+  .mb-card-grid--founders,
+  .mb-card-grid--alumni,
+  .mb-card-grid--staff {
+    grid-template-columns: 1fr;
+  }
+  .magic-bento-card:hover { transform: none; }
+}

@@ -1,0 +1,535 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ScreenshotCarousel from "../components/ScreenshotCarousel.jsx";
+import ScrollVelocity from "../components/ScrollVelocity.jsx";
+import Noise from "../components/Noise.jsx";
+import creditsData from "../data/credits.json";
+
+const TRELLO = import.meta.env.PUBLIC_TRELLO_URL;
+
+const TOKEN = import.meta.env.DISCORD_BOT_TOKEN as string | undefined;
+async function fetchAvatar(userId: string): Promise<string | null> {
+    if (!TOKEN) return null;
+    try {
+        const res = await fetch(`https://discord.com/api/v10/users/${userId}`, {
+            headers: { Authorization: `Bot ${TOKEN}` },
+        });
+        if (!res.ok) return null;
+        const data = (await res.json()) as { avatar?: string | null };
+        if (!data.avatar) return null;
+        const ext = data.avatar.startsWith("a_") ? "gif" : "png";
+        return `https://cdn.discordapp.com/avatars/${userId}/${data.avatar}.${ext}?size=128`;
+    } catch {
+        return null;
+    }
+}
+
+const founderIds = new Set(creditsData.founders.map((f) => f.id));
+const devMembers = [...creditsData.founders, ...creditsData.team];
+const idsToFetch = [
+    ...new Set(devMembers.filter((m) => !m.avatar).map((m) => m.discordId)),
+];
+const fetched = await Promise.all(
+    idsToFetch.map(async (id) => [id, await fetchAvatar(id)] as const),
+);
+const avatarMap = new Map<string, string | null>(fetched);
+const av = (m: { avatar: string; discordId: string }) =>
+    m.avatar || avatarMap.get(m.discordId) || null;
+
+const devCards = devMembers.map((m) => ({
+    id: m.id,
+    username: m.username,
+    initials: m.initials,
+    avatarUrl: av(m),
+    role: m.role,
+    clearance: (m as { clearance?: string }).clearance ?? null,
+    color: m.color,
+    tags: (m as { tags?: string[] }).tags ?? [],
+    since: m.since,
+    isFounder: founderIds.has(m.id),
+}));
+---
+
+<Layout
+    title="Développement — Site 21 RP"
+    description="L'équipe de développement de Site 21 RP."
+>
+    <!-- Wrapper commun hero + ticker : l'image bg s'étend sur les deux -->
+    <div style="position:relative;margin-bottom:2.5rem">
+        <!-- Image bg hors du overflow:hidden de page-hero pour déborder vers le bas -->
+        <div
+            class="page-hero-img-bg"
+            style="background-image:url('/screenshots/site-entry.png');opacity:0.35;overflow:hidden;bottom:-48px"
+        >
+            <Noise
+                client:only="react"
+                patternAlpha={60}
+                patternRefreshInterval={2}
+            />
+        </div>
+
+        <section class="page-hero">
+            <div class="page-hero-bg"></div>
+            <div class="container page-hero-content">
+                <span class="section-tag">// Développement</span>
+                <h1 class="page-hero-title">
+                    Le coin
+                    <span class="page-hero-highlight"> Dev</span>
+                </h1>
+                <p class="page-hero-desc">
+                    Les développeurs, designers et créateurs derrière le projet
+                    Site-21 RP. Une équipe passionnée construisant le meilleur
+                    RP SCP sur Roblox.
+                </p>
+            </div>
+        </section>
+
+        <div class="news-ticker-wrap" style="position:relative;z-index:1">
+            <ScrollVelocity
+                client:load
+                texts={[
+                    "PHASE-02 EN COURS — DÉVELOPPEMENT  ⬥  BÊTA PUBLIQUE PRÉVUE — AOÛT 2026  ⬥  RECRUTEMENT OUVERT — ALPHA TESTEURS  ⬥  SCP-173 COMPORTEMENT v3 EN TEST  ⬥  SYSTÈME RADIO EN PHASE FINALE  ⬥  V2.1.0 DÉPLOYÉE — REFONTE CONFINEMENT  ⬥  CORRECTIF D'URGENCE v2.0.4",
+                ]}
+                velocity={55}
+                numCopies={2}
+                parallaxClassName="ticker-parallax"
+                scrollerClassName="ticker-scroller"
+                className="ticker-item"
+            />
+        </div>
+    </div>
+
+    <!-- Équipe dev -->
+    <section class="page-section">
+        <div class="container">
+            <div class="section-header-row">
+                <span class="section-tag">// Équipe</span>
+                <h2 class="section-title">Développeurs</h2>
+                <p class="section-desc">
+                    Les personnes derrière chaque ligne de code, chaque asset et
+                    chaque décision de design.
+                </p>
+            </div>
+            <div class="dev-roster">
+                {
+                    devCards.map((m) => (
+                        <div class="dev-card" style={`--mc:${m.color}`}>
+                            <div class="dev-card-top">
+                                <div class="dev-card-avatar">
+                                    {m.avatarUrl ? (
+                                        <img
+                                            src={m.avatarUrl}
+                                            alt={m.username}
+                                        />
+                                    ) : (
+                                        <span class="dev-card-initials">
+                                            {m.initials}
+                                        </span>
+                                    )}
+                                </div>
+                                <div class="dev-card-identity">
+                                    <span class="dev-card-uid">{m.id}</span>
+                                    <strong class="dev-card-name">
+                                        {m.username}
+                                    </strong>
+                                    <span class="dev-card-role">{m.role}</span>
+                                </div>
+                                {m.clearance && (
+                                    <span class="dev-card-clearance">
+                                        {m.clearance}
+                                    </span>
+                                )}
+                            </div>
+                            {m.tags.length > 0 && (
+                                <div class="dev-card-tags">
+                                    {m.tags.map((t) => (
+                                        <span class="dev-card-tag">{t}</span>
+                                    ))}
+                                </div>
+                            )}
+                            <div class="dev-card-footer">
+                                <span class="dev-card-since">{m.since}</span>
+                                {m.isFounder && (
+                                    <span class="dev-card-founder">
+                                        FONDATEUR
+                                    </span>
+                                )}
+                            </div>
+                            <div class="dev-card-bar" />
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap -->
+    <section class="page-section page-section--gradient">
+        <div class="container">
+            <div class="section-header-row section-header-row--action">
+                <div>
+                    <span class="section-tag">// Roadmap</span>
+                    <h2 class="section-title">À venir</h2>
+                    <p
+                        class="section-desc"
+                        style="margin-top:0.4rem;font-size:0.78rem;"
+                    >
+                        4 grandes étapes de production — la Bêta publique ouvre
+                        en août 2026.
+                    </p>
+                </div>
+                <a
+                    href={TRELLO}
+                    class="btn-secondary btn-secondary--sm"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    ◈ Voir sur Trello
+                </a>
+            </div>
+
+            <div class="roadmap-v2">
+                <div class="roadmap-v2-line" aria-hidden="true"></div>
+
+                <!-- PHASE-01 — FONDATIONS — done -->
+                <div
+                    class="roadmap-v2-item"
+                    style="--phase-color:#4ade80;--phase-bg:rgba(74,222,128,0.06);--phase-border:rgba(74,222,128,0.25)"
+                >
+                    <div class="roadmap-v2-node">✓</div>
+                    <div class="roadmap-v2-card">
+                        <div class="roadmap-v2-header">
+                            <span class="roadmap-v2-code">PHASE-01</span>
+                            <span class="roadmap-v2-name">FONDATIONS</span>
+                            <span class="roadmap-v2-meta">
+                                <span class="roadmap-v2-badge">TERMINÉ</span>
+                                <span class="roadmap-v2-period">2025</span>
+                            </span>
+                        </div>
+                        <p class="roadmap-v2-desc">
+                            Conception, univers SCP adapté à Roblox et bases
+                            techniques : Game Design Document, carte du Site-21
+                            et systèmes de jeu fondamentaux.
+                        </p>
+                        <ul class="roadmap-v2-milestones">
+                            <li class="roadmap-v2-milestone">
+                                <span class="roadmap-v2-milestone-dot">▸</span
+                                ><span class="roadmap-v2-milestone-text"
+                                    >Game Design Document &amp; charte graphique
+                                    validés</span
+                                >
+                            </li>
+                            <li class="roadmap-v2-milestone">
+                                <span class="roadmap-v2-milestone-dot">▸</span
+                                ><span class="roadmap-v2-milestone-text"
+                                    >Carte du Site-21 — zones primaires
+                                    construites</span
+                                >
+                            </li>
+                            <li class="roadmap-v2-milestone">
+                                <span class="roadmap-v2-milestone-dot">▸</span
+                                ><span class="roadmap-v2-milestone-text"
+                                    >Framework permissions, grades &amp; arbre
+                                    des départements</span
+                                >
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- PHASE-02 — DÉVELOPPEMENT & POLISH — active -->
+                <div
+                    class="roadmap-v2-item"
+                    style="--phase-color:#22d3ee;--phase-bg:rgba(34,211,238,0.06);--phase-border:rgba(34,211,238,0.30)"
+                >
+                    <div class="roadmap-v2-node">
+                        <span class="roadmap-v2-node-pulse"></span>
+                    </div>
+                    <div class="roadmap-v2-card is-active">
+                        <div class="roadmap-v2-header">
+                            <span class="roadmap-v2-code">PHASE-02</span>
+                            <span class="roadmap-v2-name"
+                                >DÉVELOPPEMENT &amp; POLISH</span
+                            >
+                            <span class="roadmap-v2-meta">
+                                <span class="roadmap-v2-badge-dot"></span>
+                                <span class="roadmap-v2-badge">EN COURS</span>
+                                <span class="roadmap-v2-period">2026</span>
+                            </span>
+                        </div>
+                        <p class="roadmap-v2-desc">
+                            Implémentation et polissage de tous les systèmes de
+                            jeu : départements complets, comportements des SCPs,
+                            mécaniques RP, interfaces joueur et optimisation
+                            avant la phase de test.
+                        </p>
+                        <ul class="roadmap-v2-milestones">
+                            <li class="roadmap-v2-milestone">
+                                <span class="roadmap-v2-milestone-dot">▸</span
+                                ><span class="roadmap-v2-milestone-text"
+                                    >Départements, SCPs (IA, containment,
+                                    breach) &amp; systèmes RP</span
+                                >
+                            </li>
+                            <li class="roadmap-v2-milestone">
+                                <span class="roadmap-v2-milestone-dot">▸</span
+                                ><span class="roadmap-v2-milestone-text"
+                                    >HUD &amp; interfaces joueur finalisés
+                                    (Unité Minerva)</span
+                                >
+                            </li>
+                            <li class="roadmap-v2-milestone">
+                                <span class="roadmap-v2-milestone-dot">▸</span
+                                ><span class="roadmap-v2-milestone-text"
+                                    >Optimisation réseau, sound design &amp; FX
+                                    finalisés</span
+                                >
+                            </li>
+                            <li class="roadmap-v2-milestone">
+                                <span class="roadmap-v2-milestone-dot">▸</span
+                                ><span class="roadmap-v2-milestone-text"
+                                    >Correction des bugs critiques P1/P2</span
+                                >
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- PHASE-03 — PHASE DE TEST — upcoming -->
+                <div
+                    class="roadmap-v2-item"
+                    style="--phase-color:#6b7280;--phase-bg:rgba(107,114,128,0.04);--phase-border:rgba(107,114,128,0.20)"
+                >
+                    <div class="roadmap-v2-node">
+                        <span class="roadmap-v2-node-pulse" style="opacity:0.4"
+                        ></span>
+                    </div>
+                    <div class="roadmap-v2-card">
+                        <div class="roadmap-v2-header">
+                            <span class="roadmap-v2-code">PHASE-03</span>
+                            <span class="roadmap-v2-name">PHASE DE TEST</span>
+                            <span class="roadmap-v2-meta">
+                                <span class="roadmap-v2-badge">À VENIR</span>
+                                <span class="roadmap-v2-period"
+                                    >Juillet 2026</span
+                                >
+                            </span>
+                        </div>
+                        <p class="roadmap-v2-desc">
+                            Tests internes puis ouverture aux Alpha Testeurs
+                            externes : stress-test serveur, collecte des retours
+                            joueurs et derniers ajustements avant l'ouverture.
+                        </p>
+                        <ul class="roadmap-v2-milestones">
+                            <li class="roadmap-v2-milestone">
+                                <span class="roadmap-v2-milestone-dot">○</span
+                                ><span
+                                    class="roadmap-v2-milestone-text is-upcoming"
+                                    >Alpha interne — validation du loop de jeu
+                                    en conditions réelles</span
+                                >
+                            </li>
+                            <li class="roadmap-v2-milestone">
+                                <span class="roadmap-v2-milestone-dot">○</span
+                                ><span
+                                    class="roadmap-v2-milestone-text is-upcoming"
+                                    >Stress-test charge serveur multi-joueurs</span
+                                >
+                            </li>
+                            <li class="roadmap-v2-milestone">
+                                <span class="roadmap-v2-milestone-dot">○</span
+                                ><span
+                                    class="roadmap-v2-milestone-text is-upcoming"
+                                    >Retours Alpha Testeurs &amp; audit
+                                    anti-exploit</span
+                                >
+                            </li>
+                            <li class="roadmap-v2-milestone">
+                                <span class="roadmap-v2-milestone-dot">○</span
+                                ><span
+                                    class="roadmap-v2-milestone-text is-upcoming"
+                                    >Patch final pré-Bêta</span
+                                >
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- PHASE-04 — BÊTA PUBLIQUE — upcoming -->
+                <div
+                    class="roadmap-v2-item"
+                    style="--phase-color:#6b7280;--phase-bg:rgba(107,114,128,0.04);--phase-border:rgba(107,114,128,0.20)"
+                >
+                    <div class="roadmap-v2-node">
+                        <span class="roadmap-v2-node-pulse" style="opacity:0.4"
+                        ></span>
+                    </div>
+                    <div class="roadmap-v2-card">
+                        <div class="roadmap-v2-header">
+                            <span class="roadmap-v2-code">PHASE-04</span>
+                            <span class="roadmap-v2-name">BÊTA PUBLIQUE</span>
+                            <span class="roadmap-v2-meta">
+                                <span class="roadmap-v2-badge">À VENIR</span>
+                                <span class="roadmap-v2-period">Août 2026</span>
+                            </span>
+                        </div>
+                        <p class="roadmap-v2-desc">
+                            Lancement de la Bêta publique. Accès ouvert à tous
+                            les joueurs Roblox. Le Site-21 ouvre ses portes —
+                            l'histoire commence.
+                        </p>
+                        <ul class="roadmap-v2-milestones">
+                            <li class="roadmap-v2-milestone">
+                                <span class="roadmap-v2-milestone-dot">○</span
+                                ><span
+                                    class="roadmap-v2-milestone-text is-upcoming"
+                                    >Accès ouvert à tous sur Roblox</span
+                                >
+                            </li>
+                            <li class="roadmap-v2-milestone">
+                                <span class="roadmap-v2-milestone-dot">○</span
+                                ><span
+                                    class="roadmap-v2-milestone-text is-upcoming"
+                                    >Événement de lancement en direct</span
+                                >
+                            </li>
+                            <li class="roadmap-v2-milestone">
+                                <span class="roadmap-v2-milestone-dot">○</span
+                                ><span
+                                    class="roadmap-v2-milestone-text is-upcoming"
+                                    >Suivi métriques &amp; support joueurs 24/7</span
+                                >
+                            </li>
+                        </ul>
+                        <div class="roadmap-v2-footer">
+                            <span class="roadmap-v2-footer-label"
+                                >OBJECTIF FINAL —</span
+                            >
+                            <span class="roadmap-v2-footer-date"
+                                >DÉPLOIEMENT — AOÛT 2026</span
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots -->
+    <section class="page-section cinema-section">
+        <div class="container">
+            <div class="section-header-row">
+                <span class="section-tag">// Captures d'écran</span>
+                <h2 class="section-title">Aperçu du jeu</h2>
+            </div>
+            <div class="cinema-wrap">
+                <ScreenshotCarousel client:load />
+            </div>
+        </div>
+    </section>
+
+    <!-- Mises à jour -->
+    <section class="page-section">
+        <div class="container">
+            <div class="section-header-row">
+                <span class="section-tag">// Updates</span>
+                <h2 class="section-title">Dernières mises à jour</h2>
+            </div>
+
+            <div class="updates-placeholder">
+                <span class="updates-placeholder-label"
+                    >// EN ATTENTE DE LA SORTIE DU JEU</span
+                >
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Recrutements ── -->
+    <section class="page-section page-section--gradient">
+        <div class="container">
+            <div class="section-header-row">
+                <span class="section-tag">// Rejoindre l'équipe</span>
+                <h2 class="section-title">Recrutements</h2>
+                <p class="section-desc">
+                    Le Site-21 se construit avec sa communauté. Deux portes sont
+                    ouvertes — l'une pour bâtir le jeu, l'autre pour l'éprouver
+                    avant tout le monde.
+                </p>
+            </div>
+
+            <div class="recruit-grid">
+                <!-- Développeurs — candidature spontanée -->
+                <article class="recruit-card" style="--rc:#22d3ee">
+                    <span class="recruit-card-accent"></span>
+                    <div class="recruit-card-head">
+                        <span class="recruit-status recruit-status--open"
+                            >● Ouvert</span
+                        >
+                        <span class="recruit-tag">Candidature spontanée</span>
+                    </div>
+                    <h3 class="recruit-title">Développeurs</h3>
+                    <p class="recruit-desc">
+                        Scripteurs Luau, builders, modélisateurs, UI/UX, game
+                        designers… Si tu veux contribuer au Site-21, envoie une
+                        candidature spontanée — tous les profils sont étudiés.
+                    </p>
+                    <ul class="recruit-perks">
+                        <li>Projet ambitieux et structuré</li>
+                        <li>Équipe soudée et bienveillante</li>
+                        <li>Crédité sur le site officiel et le jeu</li>
+                    </ul>
+                    <button
+                        type="button"
+                        class="recruit-btn"
+                        disabled
+                        aria-disabled="true"
+                    >
+                        Postuler — formulaire à venir
+                    </button>
+                </article>
+
+                <!-- Alpha testeurs -->
+                <article class="recruit-card" style="--rc:#f97316">
+                    <span class="recruit-card-accent"></span>
+                    <div class="recruit-card-head">
+                        <span class="recruit-status recruit-status--open"
+                            >● Ouvert</span
+                        >
+                        <span class="recruit-tag">Places limitées</span>
+                    </div>
+                    <h3 class="recruit-title">Alpha testeurs</h3>
+                    <p class="recruit-desc">
+                        Joue au Site-21 avant sa sortie, remonte les bugs et
+                        aide-nous à équilibrer le gameplay. Tes retours
+                        façonnent directement la version finale.
+                    </p>
+                    <ul class="recruit-perks">
+                        <li>Accès anticipé au jeu</li>
+                        <li>Salon de test dédié sur Discord</li>
+                        <li>Badge alpha testeur exclusif</li>
+                    </ul>
+                    <button
+                        type="button"
+                        class="recruit-btn"
+                        disabled
+                        aria-disabled="true"
+                    >
+                        Candidater — formulaire à venir
+                    </button>
+                </article>
+            </div>
+        </div>
+    </section>
+</Layout>
+
+<script>
+    document.querySelectorAll(".news-expand-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+            const card = btn.closest(".news-card");
+            card?.classList.toggle("expanded");
+            btn.textContent = card?.classList.contains("expanded")
+                ? "[ RÉDUIRE ]"
+                : "[ VOIR PLUS ]";
+        });
+    });
+</script>

@@ -1,0 +1,24 @@
+{
+  "site": {
+    "title": "Site 21 RP",
+    "description": "Communauté Roblox de roleplay SCP",
+    "gameReleaseDate": "2026-08-01T00:00:00Z",
+    "language": "fr"
+  },
+  "community": {
+    "discordInvite": "https://discord.gg/ArJuw7QUyX",
+    "robloxGroup": "https://www.roblox.com/communities/10628003/SCP-Site-21#!/about",
+    "memberCount": null,
+    "values": [
+      "Respect et bienveillance",
+      "Immersion dans l'univers SCP",
+      "Qualité du roleplay",
+      "Entraide et esprit d'équipe"
+    ]
+  },
+  "socialLinks": {
+    "discord": "https://discord.gg/ArJuw7QUyX",
+    "roblox": "https://www.roblox.com/communities/10628003/SCP-Site-21#!/about",
+    "youtube": null
+  }
+}

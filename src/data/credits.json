@@ -1,0 +1,193 @@
+{
+  "_comment": "avatar : URL directe (clic droit sur la photo Discord > Copier le lien). Laisse vide pour utiliser le fetch automatique via DISCORD_BOT_TOKEN au build.",
+  "founders": [
+    {
+      "id": "FOND-01",
+      "username": "IBlue",
+      "discordId": "423860913742020608",
+      "avatar": "https://cdn.discordapp.com/avatars/423860913742020608/54f753f4e9602bcfd2efcc886b34ade7.png?size=128",
+      "initials": "IB",
+      "role": "Fondateur & Lead Dev",
+      "clearance": "CL-5",
+      "color": "#cc0000",
+      "tags": ["Direction", "Roblox Studio", "Architecture"],
+      "desc": "Création du concept, développement Roblox Studio, architecture du projet.",
+      "since": "Depuis juin 2021"
+    },
+    {
+      "id": "FOND-02",
+      "username": "MoonQC",
+      "discordId": "559421998069973003",
+      "avatar": "https://cdn.discordapp.com/avatars/559421998069973003/106b60e970f20157cd4194338ac87058.png?size=128",
+      "initials": "MQ",
+      "role": "Co-Fondateur & Lore Manager",
+      "clearance": "CL-5",
+      "color": "#cc0000",
+      "tags": ["Direction", "Lore", "Narration"],
+      "desc": "Co-création du concept, rédaction du lore, direction narrative du projet.",
+      "since": "Depuis juin 2021"
+    }
+  ],
+  "team": [
+    {
+      "id": "DEV-001",
+      "username": "BotMatteo",
+      "discordId": "721981344766230618",
+      "avatar": "https://cdn.discordapp.com/avatars/721981344766230618/f4e9a5492c4ec0db27717b7df30cb12e.png?size=128",
+      "initials": "BM",
+      "role": "Dev Senior",
+      "clearance": "CL-4",
+      "color": "#4a90d9",
+      "tags": ["Build", "Assets", "Game Design", "Lighting"],
+      "desc": "",
+      "since": "Depuis août 2023"
+    },
+    {
+      "id": "DEV-002",
+      "username": "Louloubiwan",
+      "discordId": "706552887072915486",
+      "avatar": "https://cdn.discordapp.com/avatars/706552887072915486/c0ff1e558bb754d4e2f15ae183f8773c.png?size=128",
+      "initials": "LB",
+      "role": "Développeur",
+      "clearance": "CL-4",
+      "color": "#4a90d9",
+      "tags": ["Game Design"],
+      "desc": "",
+      "since": "Depuis août 2023"
+    },
+    {
+      "id": "DES-001",
+      "username": "Clear",
+      "discordId": "457662039481909250",
+      "avatar": "https://cdn.discordapp.com/avatars/457662039481909250/a88efd61a6ded9c0b4674cbcfbdadc60.png?size=128",
+      "initials": "CL",
+      "role": "Designer",
+      "clearance": "CL-4",
+      "color": "#9b59b6",
+      "tags": ["Graphiste"],
+      "desc": "",
+      "since": "Depuis mars 2022"
+    },
+    {
+      "id": "DEV-003",
+      "username": "Overtex",
+      "discordId": "736478357008416819",
+      "avatar": "https://cdn.discordapp.com/avatars/736478357008416819/426a0a05ef756922750ff5e4342460d3.png?size=128",
+      "initials": "OV",
+      "role": "Développeur",
+      "clearance": "CL-4",
+      "color": "#4a90d9",
+      "tags": ["Scripting"],
+      "desc": "",
+      "since": "Depuis mars 2024"
+    },
+    {
+      "id": "DES-002",
+      "username": "Dertumolli",
+      "discordId": "981299219644178432",
+      "avatar": "https://cdn.discordapp.com/avatars/981299219644178432/a_7082bb2d259e426939e0d34314cd06e9.gif?size=128",
+      "initials": "DT",
+      "role": "Designer",
+      "clearance": "CL-4",
+      "color": "#9b59b6",
+      "tags": ["Graphiste"],
+      "desc": "",
+      "since": "Depuis oct. 2023"
+    },
+    {
+      "id": "DES-003",
+      "username": "Novis",
+      "discordId": "1439039755953246363",
+      "avatar": "https://cdn.discordapp.com/avatars/1439039755953246363/cfebedadaeaada05f21c7c9a16b44dc2.png?size=128",
+      "initials": "NO",
+      "role": "Designer",
+      "clearance": "CL-4",
+      "color": "#9b59b6",
+      "tags": ["Graphiste"],
+      "desc": "",
+      "since": "Depuis janv. 2025"
+    },
+    {
+      "id": "DEV-004",
+      "username": "Death",
+      "discordId": "309016271272280064",
+      "avatar": "https://cdn.discordapp.com/avatars/309016271272280064/a_5a667d9ee23729bc75af3e159b7e333f.gif?size=128",
+      "initials": "DE",
+      "role": "Développeur",
+      "clearance": "CL-4",
+      "color": "#4a90d9",
+      "tags": ["Sound Design", "Voice Acting"],
+      "desc": "",
+      "since": "Depuis août 2025"
+    },
+    {
+      "id": "EXT-001",
+      "username": "Dagon",
+      "discordId": "970703621903757314",
+      "avatar": "",
+      "initials": "DG",
+      "role": "Développeur Externe",
+      "clearance": "EXT",
+      "color": "#00cc66",
+      "tags": ["Scripting"],
+      "desc": "",
+      "since": "Depuis janv. 2026"
+    }
+  ],
+  "alumni": [
+    {
+      "id": "ALM-001",
+      "username": "Massi",
+      "discordId": "536232796348481567",
+      "avatar": "",
+      "initials": "MA",
+      "role": "Développeur",
+      "color": "#555555",
+      "tags": ["Scripting"],
+      "since": "Sep. 2023 – Nov. 2025"
+    },
+    {
+      "id": "ALM-002",
+      "username": "Thobix",
+      "discordId": "984503462962282517",
+      "avatar": "",
+      "initials": "TH",
+      "role": "Développeur",
+      "color": "#555555",
+      "tags": ["Assets"],
+      "since": "Jan. 2024 – Fév. 2024"
+    }
+  ],
+  "staff": [
+    {
+      "id": "STF-001",
+      "username": "Herobrine",
+      "discordId": "744848789302411266",
+      "avatar": "https://cdn.discordapp.com/avatars/744848789302411266/6aff720ec4b7c5849b6005ccd8d88f05.png?size=128",
+      "initials": "HB",
+      "role": "Modérateur",
+      "color": "#4a90d9",
+      "since": "Depuis fév. 2022"
+    },
+    {
+      "id": "STF-002",
+      "username": "Raphy",
+      "discordId": "872917762379493428",
+      "avatar": "https://cdn.discordapp.com/guilds/856222991386017813/users/872917762379493428/avatars/a_efd90370d1c40d36b1984fa96e840f0e.gif?size=128",
+      "initials": "RA",
+      "role": "Gestion Lore",
+      "color": "#00cc66",
+      "since": "Depuis fév. 2025"
+    },
+    {
+      "id": "STF-003",
+      "username": "DekuGoi",
+      "discordId": "764458451995852810",
+      "avatar": "https://cdn.discordapp.com/avatars/764458451995852810/7742dc3d4e6254d5a1d6af05dc599375.png?size=128",
+      "initials": "DK",
+      "role": "Community Manager",
+      "color": "#f0a500",
+      "since": "Depuis janv. 2026"
+    }
+  ]
+}

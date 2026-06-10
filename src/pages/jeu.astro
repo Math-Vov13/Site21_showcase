@@ -1,0 +1,803 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Noise from "../components/Noise.jsx";
+import ScreenshotCarousel from "../components/ScreenshotCarousel.jsx";
+import DotGrid from "../components/DotGrid.jsx";
+
+// Wiki SCP officiel (Fondation francophone) — cible des boutons « En savoir plus »
+const SCP_WIKI = "https://fondationscp.wikidot.com/";
+---
+
+<Layout
+    title="Le Jeu — Site 21 RP"
+    description="Découvrez le jeu Site 21 RP sur Roblox."
+>
+    <div style="position:relative">
+        <div
+            class="page-hero-img-bg"
+            style="background-image:url('/screenshots/scene_pont_sci.webp');opacity:0.32;overflow:hidden;bottom:-48px"
+        >
+            <Noise
+                client:only="react"
+                patternAlpha={60}
+                patternRefreshInterval={2}
+            />
+        </div>
+        <section class="page-hero">
+            <div class="page-hero-bg"></div>
+            <div class="container page-hero-content">
+                <span class="section-tag">// Dossier Jeu</span>
+                <h1 class="page-hero-title">
+                    Le Jeu
+                    <span class="page-hero-highlight"> Site-21</span>
+                </h1>
+                <p class="page-hero-desc">
+                    Plongez dans un roleplay SCP immersif sur Roblox.
+                    Départements, anomalies, brèches de confinement — le
+                    Site-21 ne dort jamais.
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <!-- L'univers SCP -->
+    <section class="page-section">
+        <div class="container">
+            <div class="section-header-row">
+                <span class="section-tag">// L'univers</span>
+                <h2 class="section-title">L'univers SCP</h2>
+                <p class="section-desc">
+                    Sous la surface du monde connu, l'inexplicable règne.
+                </p>
+            </div>
+
+            <div class="lore-block">
+                <p class="lore-lead">
+                    Le monde que vous croyez connaître n'est qu'une façade. Sous
+                    lui rôdent des
+                    <strong>anomalies</strong> : créatures, objets et phénomènes qui
+                    défient les lois de la physique, de la biologie et de la raison.
+                    Certaines terrorisent, d'autres corrompent, d'autres encore attendent,
+                    patientes, qu'on les libère.
+                </p>
+
+                <p class="lore-prose">
+                    Pour que l'humanité continue de dormir tranquille, une
+                    organisation veille dans l'ombre : la <strong
+                        >Fondation SCP</strong
+                    >. Sa doctrine tient en trois mots —
+                    <span class="lore-accent"
+                        >Sécuriser, Contenir, Protéger</span
+                    >. Là où d'autres détruiraient par peur, la Fondation
+                    capture pour étudier, enferme pour comprendre, et dissimule
+                    pour préserver la fragile normalité du monde. Chaque entité
+                    maîtrisée porte une désignation, une classe de confinement,
+                    un dossier scellé. Le reste de l'humanité, lui, n'en saura
+                    jamais rien.
+                </p>
+
+                <div class="class-banner class-keter">
+                    Site-21 — Niveau d'accréditation requis
+                </div>
+
+                <p class="lore-prose">
+                    Parmi les centaines d'installations de la Fondation
+                    disséminées sur la planète, une seule fascine autant qu'elle
+                    inquiète : le <strong>Site-21</strong>. Enfoui dans les
+                    étendues gelées de l'<strong>Alaska</strong>, à l'écart de
+                    toute carte officielle, il est l'un des joyaux
+                    technologiques de la Fondation — une prouesse d'ingénierie
+                    conçue pour retenir ce que rien d'autre ne pourrait
+                    contenir.
+                </p>
+
+                <p class="lore-prose">
+                    En son cœur veille une <strong
+                        >intelligence artificielle générale</strong
+                    >, une AGI supra-intelligente qui orchestre l'installation
+                    tout entière : ses sas, ses protocoles, ses millions de
+                    capteurs, ses décisions de confinement prises en une
+                    fraction de seconde. Rien n'entre, rien ne sort sans qu'elle
+                    le sache. Le Site-21 abrite certaines des pires horreurs
+                    jamais recensées sur Terre — et pourtant, derrière ses
+                    portes scellées, tout semble parfaitement maîtrisé.
+                </p>
+
+                <blockquote class="lore-quote">
+                    « Invisible sur les cartes, le Site-21 attire pourtant le
+                    regard de toutes les nations. Ce qu'il renferme, personne ne
+                    le sait vraiment. Ce qu'il pourrait révéler, personne n'ose
+                    l'imaginer. »
+                    <cite>// Document déclassifié — origine inconnue</cite>
+                </blockquote>
+
+                <p class="lore-prose">
+                    On murmure que personne n'y pénètre sans en ressortir
+                    transformé — si tant est qu'on en ressorte. Derrière ce nom
+                    se cachent des secrets que des gouvernements entiers
+                    convoitent, des expériences dont nul ne connaît la finalité.
+                    Mais malgré le doute, malgré l'ombre, une phrase reste
+                    inchangée : <span class="lore-accent"
+                        >nous mourrons dans l'ombre pour que l'humanité vive
+                        dans la lumière.</span
+                    >
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Le roleplay -->
+    <section class="page-section page-section--alt">
+        <div class="container">
+            <div class="section-header-row">
+                <span class="section-tag">// Gameplay</span>
+                <h2 class="section-title">Le Roleplay</h2>
+                <p class="section-desc">
+                    Un univers libre, mais où chaque grade engage.
+                </p>
+            </div>
+
+            <div class="lore-block">
+                <p class="lore-lead">
+                    Site-21 est un jeu <strong>free-RP</strong> : vous êtes libre
+                    d'écrire votre propre histoire, d'incarner votre personnage et
+                    de vivre l'installation à votre rythme. Mais cette liberté a une
+                    contrepartie — <strong
+                        >plus on monte en grade, plus les responsabilités
+                        grandissent</strong
+                    >.
+                </p>
+
+                <p class="lore-prose">
+                    À mesure que vous gravissez la hiérarchie, le niveau de
+                    connaissance requis augmente et les rôles deviennent <span
+                        class="lore-accent">whitelist</span
+                    > : on ne confie pas le confinement des pires anomalies à n'importe
+                    qui. Chaque échelon exige rigueur, maîtrise du lore et compréhension
+                    des protocoles. Les hauts gradés ne sont pas seulement des joueurs
+                    — ce sont des piliers sur lesquels repose l'immersion de tous.
+                </p>
+
+                <p class="lore-prose">
+                    Pour que l'expérience reste agréable, il est nécessaire de
+                    connaître les
+                    <strong>règles de base du RP</strong>. Quelques fondamentaux
+                    à maîtriser&nbsp;:
+                </p>
+
+                <ul class="lore-rules">
+                    <li>
+                        <span class="lore-rule-term">Pain RP</span> — réagir de façon
+                        crédible à la douleur et aux blessures.
+                    </li>
+                    <li>
+                        <span class="lore-rule-term">Freekill</span> — interdiction
+                        de tuer sans raison RP valable.
+                    </li>
+                    <li>
+                        <span class="lore-rule-term">Metagaming</span> — ne jamais
+                        utiliser une information hors-RP dans le jeu.
+                    </li>
+                    <li>
+                        <span class="lore-rule-term">No Fear</span> — votre personnage
+                        doit ressentir la peur face au danger.
+                    </li>
+                </ul>
+
+                <p class="lore-prose">
+                    Ces règles ne sont pas des contraintes : elles sont le
+                    ciment d'une expérience immersive et partagée. <strong
+                        >Le RP ne fonctionne que grâce à la communauté&nbsp;!</strong
+                    > Sans joueurs investis, sans respect mutuel, l'illusion s'effondre.
+                </p>
+
+                <p class="lore-prose">
+                    Pour nourrir cette immersion, Site-21 met en place des <strong
+                        >événements</strong
+                    >, des
+                    <strong>protocoles</strong> et une <strong>ambiance</strong> soignée
+                    — brèches de confinement, opérations spéciales, situations de
+                    crise — afin que chaque session ne soit que <span
+                        class="lore-accent"
+                        >plus vivante, plus tendue, plus mémorable</span
+                    >.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gameplay -->
+    <section class="page-section">
+        <div class="container">
+            <div class="section-header-row">
+                <span class="section-tag">// Gameplay</span>
+                <h2 class="section-title">Mécaniques de jeu</h2>
+                <p class="section-desc">
+                    Une hiérarchie vivante, un confinement fragile et une
+                    tension de chaque instant.
+                </p>
+            </div>
+
+            <div class="lore-block" style="max-width:820px">
+                <p class="lore-lead">
+                    Au-delà du roleplay libre, Site-21 repose sur des <strong
+                        >systèmes concrets</strong
+                    > qui structurent chaque session : votre grade, vos accès, votre
+                    département — et l'imprévu qui peut tout faire basculer.
+                </p>
+            </div>
+
+            <div class="about-grid" style="margin-top:2rem">
+                <div class="about-card">
+                    <span class="about-card-icon">⬢</span>
+                    <h3 class="about-card-title">Niveaux d'accréditation</h3>
+                    <p class="about-card-text">
+                        Du Niveau 1 au Conseil O5, chaque grade débloque de
+                        nouveaux accès, zones et responsabilités. Plus on
+                        s'élève, plus la confiance — et le danger — augmentent.
+                    </p>
+                    <span class="about-card-code">// CLEARANCE</span>
+                </div>
+
+                <div class="about-card">
+                    <span class="about-card-icon">⬡</span>
+                    <h3 class="about-card-title">Classes jouables</h3>
+                    <p class="about-card-text">
+                        Classe-D, personnel de site, agents de sécurité,
+                        chercheurs, Forces d'Intervention Mobiles ou
+                        administration : chaque rôle a ses objectifs, ses droits
+                        et ses risques propres.
+                    </p>
+                    <span class="about-card-code">// RÔLES</span>
+                </div>
+
+                <div class="about-card">
+                    <span class="about-card-icon">▲</span>
+                    <h3 class="about-card-title">Brèches de confinement</h3>
+                    <p class="about-card-text">
+                        Une anomalie qui s'échappe, une alarme qui hurle, des
+                        couloirs plongés dans le rouge. Les brèches transforment
+                        une journée de routine en lutte pour la survie du Site.
+                    </p>
+                    <span class="about-card-code">// CODE NOIR</span>
+                </div>
+
+                <div class="about-card">
+                    <span class="about-card-icon">◈</span>
+                    <h3 class="about-card-title">Protocoles & événements</h3>
+                    <p class="about-card-text">
+                        Opérations scénarisées, inspections, fouilles,
+                        transferts d'anomalies : des événements rythment la vie
+                        du Site et donnent du sens à chaque rôle.
+                    </p>
+                    <span class="about-card-code">// PROTOCOLE</span>
+                </div>
+            </div>
+
+            <div class="lore-block" style="max-width:820px;margin-top:2rem">
+                <p class="lore-prose">
+                    Progression, coordination entre départements et gestion de
+                    crise : tout est pensé pour que chaque partie raconte une
+                    histoire différente. <span class="lore-accent"
+                        >Au Site-21, rien n'est jamais vraiment sous contrôle.</span
+                    >
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Départements -->
+    <section class="page-section page-section--gradient dept-section">
+        <div class="dept-dotgrid-bg">
+            <DotGrid
+                client:only="react"
+                dotSize={4}
+                gap={26}
+                baseColor="#3a0d0d"
+                activeColor="#cc0000"
+                proximity={120}
+                speedTrigger={2000}
+                shockRadius={180}
+                shockStrength={2.5}
+                returnDuration={0.9}
+            />
+        </div>
+        <div class="container dept-section-inner">
+            <div class="section-header-row">
+                <span class="section-tag">// Organisation</span>
+                <h2 class="section-title">Départements</h2>
+                <p class="section-desc">
+                    Le Site-21 fonctionne grâce à ses départements, chacun
+                    gardien d'une mission vitale.
+                </p>
+            </div>
+
+            <div class="dept-hierarchy">
+                <!-- Conseil O5 — au sommet, au-dessus de tout -->
+                <div class="dept-tier dept-tier--feature">
+                    <article
+                        class="dept-card dept-card--feature"
+                        style="--dept-color:#e2e8f0"
+                    >
+                        <div class="dept-logo dept-logo--xl">
+                            <img
+                                src="/logos/O5_site21_logo.webp"
+                                alt="Logo Comité de Réglementation et d'Application de la Fondation"
+                            />
+                        </div>
+                        <h3 class="dept-name">O5</h3>
+                        <p class="dept-desc">
+                            La plus haute autorité du Site. Il édicte les
+                            règles, tranche les dilemmes et veille à leur
+                            application sur l'ensemble de la Fondation.
+                        </p>
+                        <a
+                            class="dept-more"
+                            href={SCP_WIKI}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >En savoir plus <span class="dept-more-arrow"
+                                >→</span
+                            ></a
+                        >
+                    </article>
+                </div>
+
+                <span class="dept-connector"></span>
+
+                <!-- Administration du Site -->
+                <div class="dept-tier dept-tier--solo">
+                    <article
+                        class="dept-card is-soon"
+                        style="--dept-color:#cbd5e1"
+                    >
+                        <span class="dept-card-accent"></span>
+                        <span class="dept-badge-soon">À venir</span>
+                        <div class="dept-card-head">
+                            <div class="dept-logo">
+                                <span class="dept-logo-placeholder">DA</span>
+                            </div>
+                            <div>
+                                <h3 class="dept-name">Administratif</h3>
+                                <p class="dept-code">
+                                    DA · Coordination du Site
+                                </p>
+                            </div>
+                        </div>
+                        <p class="dept-desc">
+                            Coordination, ressources humaines et gestion
+                            quotidienne. La logistique invisible qui relie tous
+                            les départements et maintient le Site cohérent.
+                        </p>
+                        <a
+                            class="dept-more"
+                            href={SCP_WIKI}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >En savoir plus <span class="dept-more-arrow"
+                                >→</span
+                            ></a
+                        >
+                    </article>
+                </div>
+
+                <span class="dept-connector"></span>
+
+                <!-- Départements du Site -->
+                <div class="dept-tier-label">Départements</div>
+                <div class="dept-grid">
+                    <article class="dept-card" style="--dept-color:#a78bfa">
+                        <span class="dept-card-accent"></span>
+                        <div class="dept-card-head">
+                            <div class="dept-logo">
+                                <img
+                                    src="/logos/SCI_site21_logo.webp"
+                                    alt="Logo Département des Sciences et de l'Expérimentation"
+                                />
+                            </div>
+                            <div>
+                                <h3 class="dept-name">
+                                    Sciences & Expérimentation
+                                </h3>
+                                <p class="dept-code">DS&E · Div. Flore</p>
+                            </div>
+                        </div>
+                        <p class="dept-desc">
+                            Étude et expérimentation des anomalies. Comprendre
+                            l'inexplicable, repousser les limites du savoir —
+                            quel qu'en soit le prix.
+                        </p>
+                        <a
+                            class="dept-more"
+                            href={SCP_WIKI}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >En savoir plus <span class="dept-more-arrow"
+                                >→</span
+                            ></a
+                        >
+                    </article>
+
+                    <article class="dept-card" style="--dept-color:#cc0000">
+                        <span class="dept-card-accent"></span>
+                        <div class="dept-card-head">
+                            <div class="dept-logo">
+                                <img
+                                    src="/logos/SECU_site21_logo.webp"
+                                    alt="Logo Département de la Sécurité"
+                                />
+                            </div>
+                            <div>
+                                <h3 class="dept-name">Sécurité</h3>
+                                <p class="dept-code">SÉCU</p>
+                            </div>
+                        </div>
+                        <p class="dept-desc">
+                            Première ligne de défense interne : gardes, points
+                            de contrôle, réponse aux intrusions et confinement
+                            de proximité.
+                        </p>
+                        <a
+                            class="dept-more"
+                            href={SCP_WIKI}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >En savoir plus <span class="dept-more-arrow"
+                                >→</span
+                            ></a
+                        >
+                    </article>
+
+                    <article class="dept-card" style="--dept-color:#60a5fa">
+                        <span class="dept-card-accent"></span>
+                        <div class="dept-card-head">
+                            <div class="dept-logo">
+                                <span class="dept-logo-placeholder">DSTG</span>
+                            </div>
+                            <div>
+                                <h3 class="dept-name">
+                                    Services Techniques Généraux
+                                </h3>
+                                <p class="dept-code">
+                                    DSTG · Div. Informatique
+                                </p>
+                            </div>
+                        </div>
+                        <p class="dept-desc">
+                            Énergie, maintenance, réseaux et systèmes du Site.
+                            Ce sont eux qui gardent les lumières allumées et les
+                            sas verrouillés.
+                        </p>
+                        <a
+                            class="dept-more"
+                            href={SCP_WIKI}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >En savoir plus <span class="dept-more-arrow"
+                                >→</span
+                            ></a
+                        >
+                    </article>
+
+                    <article
+                        class="dept-card is-soon"
+                        style="--dept-color:#34d399"
+                    >
+                        <span class="dept-card-accent"></span>
+                        <span class="dept-badge-soon">À venir</span>
+                        <div class="dept-card-head">
+                            <div class="dept-logo">
+                                <span class="dept-logo-placeholder">DM&AS</span>
+                            </div>
+                            <div>
+                                <h3 class="dept-name">
+                                    Médical & Affaires Sanitaires
+                                </h3>
+                                <p class="dept-code">
+                                    DM&AS · Div. Maladies infectieuses
+                                </p>
+                            </div>
+                        </div>
+                        <p class="dept-desc">
+                            Soins, quarantaines et gestion des risques
+                            biologiques. La dernière barrière entre le personnel
+                            et la contamination.
+                        </p>
+                        <a
+                            class="dept-more"
+                            href={SCP_WIKI}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >En savoir plus <span class="dept-more-arrow"
+                                >→</span
+                            ></a
+                        >
+                    </article>
+
+                    <article
+                        class="dept-card is-soon"
+                        style="--dept-color:#fbbf24"
+                    >
+                        <span class="dept-card-accent"></span>
+                        <span class="dept-badge-soon">À venir</span>
+                        <div class="dept-card-head">
+                            <div class="dept-logo">
+                                <span class="dept-logo-placeholder">DRRE</span>
+                            </div>
+                            <div>
+                                <h3 class="dept-name">
+                                    Renseignement & Relations Externes
+                                </h3>
+                                <p class="dept-code">
+                                    DRRE · Agence de Renseignement
+                                </p>
+                            </div>
+                        </div>
+                        <p class="dept-desc">
+                            Renseignement, désinformation et relations avec les
+                            entités extérieures. Ce que le monde sait du Site-21
+                            passe d'abord par leurs mains.
+                        </p>
+                        <a
+                            class="dept-more"
+                            href={SCP_WIKI}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >En savoir plus <span class="dept-more-arrow"
+                                >→</span
+                            ></a
+                        >
+                    </article>
+
+                    <article
+                        class="dept-card is-soon"
+                        style="--dept-color:#fb923c"
+                    >
+                        <span class="dept-card-accent"></span>
+                        <span class="dept-badge-soon">À venir</span>
+                        <div class="dept-card-head">
+                            <div class="dept-logo">
+                                <span class="dept-logo-placeholder">DLM</span>
+                            </div>
+                            <div>
+                                <h3 class="dept-name">
+                                    Logistique & Manufacture
+                                </h3>
+                                <p class="dept-code">DLM</p>
+                            </div>
+                        </div>
+                        <p class="dept-desc">
+                            Approvisionnement, fabrication d'équipement et
+                            chaîne logistique. Rien n'entre, rien ne sort du
+                            Site sans leur aval.
+                        </p>
+                        <a
+                            class="dept-more"
+                            href={SCP_WIKI}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >En savoir plus <span class="dept-more-arrow"
+                                >→</span
+                            ></a
+                        >
+                    </article>
+
+                    <article
+                        class="dept-card is-soon"
+                        style="--dept-color:#f87171"
+                    >
+                        <span class="dept-card-accent"></span>
+                        <span class="dept-badge-soon">À venir</span>
+                        <div class="dept-card-head">
+                            <div class="dept-logo">
+                                <span class="dept-logo-placeholder">DFIM</span>
+                            </div>
+                            <div>
+                                <h3 class="dept-name">
+                                    Forces d'Intervention Mobiles
+                                </h3>
+                                <p class="dept-code">DFIM</p>
+                            </div>
+                        </div>
+                        <p class="dept-desc">
+                            Unités d'élite déployées sur les brèches,
+                            récupérations d'anomalies et opérations à haut
+                            risque. Là où tout le reste a échoué.
+                        </p>
+                        <a
+                            class="dept-more"
+                            href={SCP_WIKI}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >En savoir plus <span class="dept-more-arrow"
+                                >→</span
+                            ></a
+                        >
+                    </article>
+
+                    <article
+                        class="dept-card is-soon"
+                        style="--dept-color:#94a3b8"
+                    >
+                        <span class="dept-card-accent"></span>
+                        <span class="dept-badge-soon">À venir</span>
+                        <div class="dept-card-head">
+                            <div class="dept-logo">
+                                <img
+                                    src="/logos/DJI_site21_logo.webp"
+                                    alt="Logo Département de la Justice Interne"
+                                />
+                            </div>
+                            <div>
+                                <h3 class="dept-name">Justice Interne</h3>
+                                <p class="dept-code">DJI</p>
+                            </div>
+                        </div>
+                        <p class="dept-desc">
+                            Enquêtes, discipline et application du règlement
+                            parmi le personnel. Nul, pas même un O5, n'est
+                            au-dessus des lois du Site.
+                        </p>
+                        <a
+                            class="dept-more"
+                            href={SCP_WIKI}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >En savoir plus <span class="dept-more-arrow"
+                                >→</span
+                            ></a
+                        >
+                    </article>
+
+                    <article
+                        class="dept-card is-soon"
+                        style="--dept-color:#22d3ee"
+                    >
+                        <span class="dept-card-accent"></span>
+                        <span class="dept-badge-soon">À venir</span>
+                        <div class="dept-card-head">
+                            <div class="dept-logo">
+                                <span class="dept-logo-placeholder">ASIA</span>
+                            </div>
+                            <div>
+                                <h3 class="dept-name">
+                                    Sécurité des Informations & Archives
+                                </h3>
+                                <p class="dept-code">ASIA</p>
+                            </div>
+                        </div>
+                        <p class="dept-desc">
+                            Classification, conservation et protection des
+                            archives sensibles. Les secrets du Site-21 dorment
+                            derrière leurs portes scellées.
+                        </p>
+                        <a
+                            class="dept-more"
+                            href={SCP_WIKI}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >En savoir plus <span class="dept-more-arrow"
+                                >→</span
+                            ></a
+                        >
+                    </article>
+
+                    <article
+                        class="dept-card is-soon"
+                        style="--dept-color:#f472b6"
+                    >
+                        <span class="dept-card-accent"></span>
+                        <span class="dept-badge-soon">À venir</span>
+                        <div class="dept-card-head">
+                            <div class="dept-logo">
+                                <span class="dept-logo-placeholder">DSPI</span>
+                            </div>
+                            <div>
+                                <h3 class="dept-name">
+                                    Surveillance & Prévention des Incidents
+                                </h3>
+                                <p class="dept-code">
+                                    DSPI · Autorité de Réponse Tactique
+                                </p>
+                            </div>
+                        </div>
+                        <p class="dept-desc">
+                            Anticipation et neutralisation des menaces
+                            émergentes. Ils voient venir la crise avant qu'elle
+                            n'éclate — et frappent en premier.
+                        </p>
+                        <a
+                            class="dept-more"
+                            href={SCP_WIKI}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >En savoir plus <span class="dept-more-arrow"
+                                >→</span
+                            ></a
+                        >
+                    </article>
+
+                    <article
+                        class="dept-card is-soon"
+                        style="--dept-color:#a3e635"
+                    >
+                        <span class="dept-card-accent"></span>
+                        <span class="dept-badge-soon">À venir</span>
+                        <div class="dept-card-head">
+                            <div class="dept-logo">
+                                <span class="dept-logo-placeholder">CRA</span>
+                            </div>
+                            <div>
+                                <h3 class="dept-name">
+                                    Réglementation & Application
+                                </h3>
+                                <p class="dept-code">CRA · Comité Éthique</p>
+                            </div>
+                        </div>
+                        <p class="dept-desc">
+                            Garant de l'éthique du Site : il veille à ce que les
+                            règles et les protocoles respectent une ligne morale,
+                            et tranche les dilemmes que personne d'autre n'ose
+                            arbitrer.
+                        </p>
+                        <a
+                            class="dept-more"
+                            href={SCP_WIKI}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >En savoir plus <span class="dept-more-arrow"
+                                >→</span
+                            ></a
+                        >
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Direction Artistique & Galerie -->
+    <section class="page-section page-section--alt">
+        <div class="container">
+            <div class="section-header-row">
+                <span class="section-tag">// Direction Artistique</span>
+                <h2 class="section-title">L'identité visuelle du Site-21</h2>
+                <p class="section-desc">
+                    Chaque pixel sert l'immersion. Rien n'est laissé au hasard.
+                </p>
+            </div>
+
+            <div class="da-layout">
+                <div class="lore-block" style="margin-top:0">
+                    <p class="lore-prose">
+                        Le Site-21 cultive une esthétique <strong
+                            >oppressante et clinique</strong
+                        > : béton brut, néons froids, signalétique militaire et lueurs
+                        rouges d'alerte. L'architecture brutaliste, enfouie sous les
+                        glaces de l'Alaska, traduit une installation pensée pour contenir,
+                        pas pour accueillir.
+                    </p>
+                    <p class="lore-prose">
+                        Le travail sur l'<strong>éclairage</strong> et l'<strong
+                            >ambiance sonore</strong
+                        > joue un rôle central : pénombre des couloirs, bourdonnements
+                        de machines, alarmes lointaines. Tout est calibré pour que
+                        la tension ne retombe jamais vraiment.
+                    </p>
+                    <p class="lore-prose">
+                        Le résultat : un univers <span class="lore-accent"
+                            >cohérent, crédible et résolument SCP</span
+                        >, où l'atmosphère raconte autant que le gameplay.
+                    </p>
+                </div>
+
+                <div class="da-gallery">
+                    <ScreenshotCarousel client:load />
+                    <p class="da-gallery-note">
+                        // Captures issues du développement en cours — sujettes
+                        à évolution
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+</Layout>

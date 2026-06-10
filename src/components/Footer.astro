@@ -1,0 +1,159 @@
+---
+const year = new Date().getFullYear();
+const DISCORD = import.meta.env.PUBLIC_DISCORD_INVITE_URL;
+const ROBLOX_G = import.meta.env.PUBLIC_ROBLOX_GROUP_URL;
+const ROBLOX_J = import.meta.env.PUBLIC_ROBLOX_GAME_URL;
+const TRELLO = import.meta.env.PUBLIC_TRELLO_URL;
+---
+
+<footer class="scp-footer">
+    <!-- ── Bande de statut ── -->
+    <div class="footer-status-bar" aria-hidden="true">
+        <span class="footer-status-item">
+            <span class="footer-status-dot"></span>SYSTÈMES OPÉRATIONNELS
+        </span>
+        <span class="footer-status-item footer-status-item--wide">
+            UPLINK: SITE-21.ALPHA // CANAL SÉCURISÉ
+        </span>
+        <span class="footer-status-item">SORTIE: AOÛT 2026</span>
+    </div>
+
+    <div class="footer-grid">
+        <!-- ── Colonne 1 : Brand + tagline + réseaux ── -->
+        <div>
+            <div class="footer-brand-row">
+                <img
+                    src="/logos/site21_logo.webp"
+                    alt=""
+                    aria-hidden="true"
+                    class="footer-logo"
+                    loading="lazy"
+                />
+                <div>
+                    <div class="footer-brand-text">SCP RP SITE-21</div>
+                    <div class="footer-brand-sub">
+                        SÉCURISER · CONTENIR · PROTÉGER
+                    </div>
+                </div>
+            </div>
+            <p class="footer-tagline">
+                Une communauté Roblox française dédiée au roleplay SCP. Des
+                anomalies, des départements, des brèches — et des joueurs
+                passionnés qui font vivre le Site-21 depuis 2021.
+            </p>
+            <div
+                style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:1.5rem;"
+            >
+                <a
+                    href={DISCORD}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn btn-discord btn-sm"
+                >
+                    ◈ Discord
+                </a>
+                <a
+                    href={ROBLOX_G}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn btn-roblox btn-sm"
+                >
+                    ⬡ Roblox
+                </a>
+            </div>
+            <!-- Disclaimer légal (repris du showcase v1) -->
+            <p class="footer-disclaimer">
+                Site 21 RP est un projet fan <strong
+                    style="color:var(--text-primary)"
+                    >non officiel et non affilié</strong
+                >
+                à la Fondation SCP. La Fondation SCP est une œuvre de fiction collaborative
+                sous licence Creative Commons — visitez&nbsp;<a
+                    href="https://fondationscp.wikidot.com/"
+                    target="_blank"
+                    rel="noopener noreferrer">fondationscp.wikidot.com</a
+                >&nbsp;pour l'univers officiel.
+            </p>
+        </div>
+
+        <!-- ── Colonne 2 : Navigation ── -->
+        <div>
+            <div class="footer-col-title">Navigation</div>
+            <nav class="footer-links">
+                <a href="/">Accueil</a>
+                <a href="/jeu">Le Jeu</a>
+                <a href="/developpement">Développement</a>
+                <a href="/communaute">Communauté</a>
+                <a href="/credits">Crédits</a>
+            </nav>
+        </div>
+
+        <!-- ── Colonne 3 : Connexions ── -->
+        <div>
+            <div class="footer-col-title">Connexions</div>
+            <nav class="footer-links">
+                <a href={DISCORD} target="_blank" rel="noopener noreferrer">
+                    Serveur Discord
+                </a>
+                <a href={ROBLOX_G} target="_blank" rel="noopener noreferrer">
+                    Groupe Roblox
+                </a>
+                <a href={ROBLOX_J} target="_blank" rel="noopener noreferrer">
+                    Jeu Roblox
+                </a>
+                <a href={TRELLO} target="_blank" rel="noopener noreferrer">
+                    Trello Dev
+                </a>
+            </nav>
+        </div>
+
+        <!-- ── Colonne 4 : Transmission (terminal) ── -->
+        <div>
+            <div class="footer-col-title">Transmission</div>
+            <div class="footer-terminal">
+                <div class="footer-kv">
+                    <span>Statut</span>
+                    <span class="footer-kv-val footer-kv-val--ok"
+                        >En développement</span
+                    >
+                </div>
+                <div class="footer-kv">
+                    <span>Sortie</span>
+                    <span class="footer-kv-val">Août 2026</span>
+                </div>
+                <div class="footer-kv">
+                    <span>Fondé</span>
+                    <span class="footer-kv-val">2021</span>
+                </div>
+                <div class="footer-kv">
+                    <span>Membres</span>
+                    <span class="footer-kv-val">280+</span>
+                </div>
+                <div class="footer-kv">
+                    <span>Secteur</span>
+                    <span class="footer-kv-val"
+                        ><span class="redacted">Alaska</span></span
+                    >
+                </div>
+                <div class="footer-term-line">
+                    &gt; recrutement_personnel: ouvert<span
+                        class="footer-cursor">▌</span
+                    >
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Footer Bottom ── -->
+    <div class="footer-bottom">
+        <span class="footer-copyright">
+            © 2024–{year} SCP RP Site-21 · Communauté Roblox FR · Tous droits réservés
+        </span>
+        <span class="footer-made">
+            Conçu par la communauté, pour la communauté
+        </span>
+        <span class="footer-classification">
+            CLASSIFICATION: USAGE INTERNE · SITE-21 / SECTEUR ALPHA
+        </span>
+    </div>
+</footer>

@@ -1,0 +1,321 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Noise from '../components/Noise.jsx';
+import DotGrid from '../components/DotGrid.jsx';
+import creditsData from '../data/credits.json';
+
+const DISCORD = import.meta.env.PUBLIC_DISCORD_INVITE_URL;
+
+const TOKEN = import.meta.env.DISCORD_BOT_TOKEN as string | undefined;
+async function fetchAvatar(userId: string): Promise<string | null> {
+  if (!TOKEN) return null;
+  try {
+    const res = await fetch(`https://discord.com/api/v10/users/${userId}`, {
+      headers: { Authorization: `Bot ${TOKEN}` },
+    });
+    if (!res.ok) return null;
+    const data = await res.json() as { avatar?: string | null };
+    if (!data.avatar) return null;
+    const ext = data.avatar.startsWith('a_') ? 'gif' : 'png';
+    return `https://cdn.discordapp.com/avatars/${userId}/${data.avatar}.${ext}?size=128`;
+  } catch { return null; }
+}
+
+const idsToFetch = [...new Set(creditsData.staff.filter((m) => !m.avatar).map((m) => m.discordId))];
+const entries = await Promise.all(idsToFetch.map(async (id) => [id, await fetchAvatar(id)] as const));
+const avatarMap = new Map<string, string | null>(entries);
+const av = (m: { avatar: string; discordId: string }): string | null =>
+  m.avatar || avatarMap.get(m.discordId) || null;
+
+const staffCards = creditsData.staff.map((m) => ({
+  id: m.id, username: m.username, initials: m.initials,
+  avatarUrl: av(m), role: m.role, color: m.color, since: m.since,
+}));
+---
+
+<Layout title="Communauté — Site 21 RP" description="La communauté Site 21 RP sur Discord et Roblox.">
+
+  <div style="position:relative">
+    <div
+      class="page-hero-img-bg"
+      style="background-image:url('/screenshots/scene_ms.webp');opacity:0.32;overflow:hidden;bottom:-48px"
+    >
+      <Noise client:only="react" patternAlpha={60} patternRefreshInterval={2} />
+    </div>
+    <section class="page-hero">
+      <div class="page-hero-bg"></div>
+      <div class="container page-hero-content">
+        <span class="section-tag">// Communauté</span>
+        <h1 class="page-hero-title">
+          Notre
+          <span class="page-hero-highlight"> Communauté</span>
+        </h1>
+        <p class="page-hero-desc">
+          Une communauté 100% française, passionnée par l'univers SCP et le roleplay de qualité.
+          Rejoignez-nous sur Discord.
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <!-- Présentation / Histoire -->
+  <section class="page-section">
+    <div class="container">
+      <div class="section-header-row">
+        <span class="section-tag">// Présentation</span>
+        <h2 class="section-title">Qui sommes-nous ?</h2>
+        <p class="section-desc">Une communauté née d'une rencontre, d'une passion commune, et d'un rêve partagé.</p>
+      </div>
+      <div class="origin-story">
+        <div class="origin-date">Juin 2021</div>
+        <div class="origin-body">
+          <p class="os-intro">
+            <span class="os-red">Il était une fois</span> deux inconnus, quelque part sur Roblox.
+          </p>
+          <p>
+            Le premier connaissait <span class="os-mark">l'univers SCP</span> par cœur — les anomalies, les procédures de confinement, les secrets enfouis dans des rapports que personne n'était censé lire. Joueur aguerri des <em>jeux SCP RP sur Roblox</em>, il savait exactement ce que la scène francophone avait à offrir. Et ce qu'elle <span class="os-bright">aurait pu être</span>.
+          </p>
+          <p>
+            Le second, lui, <span class="os-under">ne connaissait pas l'univers SCP</span>. Ce qui l'animait, c'était le <em>développement informatique</em> et la passion des jeux vidéo. En cherchant simplement <span class="os-ghost">une équipe de dev sur Roblox à rejoindre</span>, il s'est retrouvé, presque par accident, à concevoir un projet entier — <strong>de zéro.</strong>
+          </p>
+          <p>
+            Ensemble, sur ce serveur Roblox SCP où le hasard les a réunis, ils voyaient <em>les mêmes failles</em> : des bugs qui brisaient l'immersion, des mécaniques bâclées, <span class="os-mark">une communauté francophone</span> qui méritait <strong>tellement mieux</strong>. Pas de la colère — <span class="os-ghost">plutôt une évidence.</span> <span class="os-bright">Pourquoi pas eux ?</span>
+          </p>
+          <p>
+            <span class="os-mono">// Juin 2021</span> — la décision est prise. Et quelque chose d'inattendu s'est produit : au fil du temps, des rencontres, des discussions et des nuits passées sur le projet, celui qui ne connaissait <em>rien</em> à l'univers SCP s'y est <span class="os-red">passionné</span>. Les anomalies, le lore, les départements et les groupes affiliés — tout ce monde est devenu <strong>le sien aussi.</strong>
+          </p>
+          <p class="origin-closing">
+            Ils ne savaient pas encore que cette rencontre allait les suivre <em>pendant des années</em>. Que ce projet allait grandir, évoluer, traverser des doutes et des victoires. Mais cette histoire — <strong>elle continue.</strong> Et vous en faites partie.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vie de la communauté -->
+  <section class="page-section page-section--alt">
+    <div class="container">
+      <div class="section-header-row">
+        <span class="section-tag">// Vie du serveur</span>
+        <h2 class="section-title">Une communauté vivante</h2>
+        <p class="section-desc">Bienveillante, active — et toujours une bonne raison de passer sur le serveur.</p>
+      </div>
+
+      <div class="lore-block" style="max-width:820px">
+        <p class="lore-lead">
+          Ici, pas besoin d'être un vétéran du RP pour trouver sa place. La communauté du
+          Site-21 est <strong>gentille, active et accueillante</strong> — on s'entraide,
+          on rigole, et la bonne humeur fait partie du protocole.
+        </p>
+      </div>
+
+      <div class="about-grid" style="margin-top:2rem">
+        <div class="about-card">
+          <span class="about-card-icon">◈</span>
+          <h3 class="about-card-title">Événements réguliers</h3>
+          <p class="about-card-text">
+            Soirées RP, mini-jeux, concours et animations surprises — des événements
+            sont organisés souvent pour garder la bonne humeur et rassembler tout
+            le monde.
+          </p>
+          <span class="about-card-code">// ÉVÉNEMENTS</span>
+        </div>
+
+        <div class="about-card">
+          <span class="about-card-icon">⬢</span>
+          <h3 class="about-card-title">Rôles à gagner</h3>
+          <p class="about-card-text">
+            Participez à la vie du serveur et décrochez des rôles Discord exclusifs
+            qui marquent votre place — et votre ancienneté — dans la communauté.
+          </p>
+          <span class="about-card-code">// RÔLES</span>
+        </div>
+
+        <div class="about-card">
+          <span class="about-card-icon">⬡</span>
+          <h3 class="about-card-title">Récompenses en jeu</h3>
+          <p class="about-card-text">
+            Les membres les plus investis repartent avec des récompenses en jeu :
+            avantages, objets exclusifs et reconnaissance dès le lancement du Site-21.
+          </p>
+          <span class="about-card-code">// RÉCOMPENSES</span>
+        </div>
+
+        <div class="about-card">
+          <span class="about-card-icon">▲</span>
+          <h3 class="about-card-title">Recrutements ouverts</h3>
+          <p class="about-card-text">
+            Staff, alpha testeurs, équipes RP : des recrutements sont ouverts
+            régulièrement. Il y a toujours une place pour celles et ceux qui
+            veulent s'impliquer.
+          </p>
+          <span class="about-card-code">// RECRUTEMENT</span>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;margin-top:2.75rem;text-align:center">
+        <p class="section-desc" style="margin:0">Et bien plus encore — venez voir par vous-même.</p>
+        <a href={DISCORD} target="_blank" rel="noopener noreferrer" class="btn-primary">
+          ▶ Rejoignez-nous
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Discord -->
+  <section class="page-section page-section--gradient">
+    <div class="container">
+      <div class="section-header-row">
+        <span class="section-tag">// Discord</span>
+        <h2 class="section-title">Serveur Discord</h2>
+        <p class="section-desc">Rejoins la communauté, suis l'avancement du projet et échange avec l'équipe.</p>
+      </div>
+      <div class="discord-widget-wrap">
+        <iframe
+          src="https://discord.com/widget?id=856222991386017813&theme=dark"
+          width="350"
+          height="500"
+          allowtransparency="true"
+          frameborder="0"
+          sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
+          title="Serveur Discord Site 21"
+        ></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- Staff -->
+  <section class="page-section page-section--alt">
+    <div class="container">
+      <div class="section-header-row">
+        <span class="section-tag">// Staff</span>
+        <h2 class="section-title">L'équipe de modération</h2>
+        <p class="section-desc">Modérateurs, gestionnaires du lore et community managers — les gardiens de la communauté.</p>
+      </div>
+      <div class="dev-roster">
+        {staffCards.map((m) => (
+          <div class="dev-card" style={`--mc:${m.color}`}>
+            <div class="dev-card-top">
+              <div class="dev-card-avatar">
+                {m.avatarUrl
+                  ? <img src={m.avatarUrl} alt={m.username} />
+                  : <span class="dev-card-initials">{m.initials}</span>
+                }
+              </div>
+              <div class="dev-card-identity">
+                <span class="dev-card-uid">{m.id}</span>
+                <strong class="dev-card-name">{m.username}</strong>
+                <span class="dev-card-role">{m.role}</span>
+              </div>
+            </div>
+            <div class="dev-card-footer">
+              <span class="dev-card-since">{m.since}</span>
+              <span class="dev-card-founder" style="color:var(--mc);border-color:color-mix(in srgb,var(--mc) 40%,transparent)">STAFF</span>
+            </div>
+            <div class="dev-card-bar"></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Serveurs affiliés -->
+  <section class="page-section page-section--gradient dept-section">
+    <div class="dept-dotgrid-bg">
+      <DotGrid
+        client:only="react"
+        dotSize={4}
+        gap={26}
+        baseColor="#3a0d0d"
+        activeColor="#cc0000"
+        proximity={120}
+        speedTrigger={2000}
+        shockRadius={180}
+        shockStrength={2.5}
+        returnDuration={0.9}
+      />
+    </div>
+    <div class="container dept-section-inner">
+      <div class="section-header-row">
+        <span class="section-tag">// Partenaires</span>
+        <h2 class="section-title">Serveurs affiliés</h2>
+        <p class="section-desc">
+          Des groupes externes à la Fondation — alliés ou hostiles — qui
+          gravitent autour du Site-21 et enrichissent le roleplay.
+        </p>
+      </div>
+
+      <div class="dept-grid">
+        <article class="dept-card" style="--dept-color:#dc2626">
+          <span class="dept-card-accent"></span>
+          <div class="dept-card-head">
+            <div class="dept-logo">
+              <span class="dept-logo-placeholder">IC</span>
+            </div>
+            <div>
+              <h3 class="dept-name">Insurgés du Chaos</h3>
+              <p class="dept-code">IC · Groupe externe</p>
+            </div>
+          </div>
+          <p class="dept-desc">
+            Faction dissidente née d'anciens agents de la Fondation. Idéologie
+            militante et méthodes radicales — un adversaire redouté sur le
+            terrain.
+          </p>
+        </article>
+
+        <article class="dept-card" style="--dept-color:#16a34a">
+          <span class="dept-card-accent"></span>
+          <div class="dept-card-head">
+            <div class="dept-logo">
+              <span class="dept-logo-placeholder">MS</span>
+            </div>
+            <div>
+              <h3 class="dept-name">Main du Serpent</h3>
+              <p class="dept-code">MS · Groupe externe</p>
+            </div>
+          </div>
+          <p class="dept-desc">
+            Organisation qui défend le droit des entités anomales à exister
+            libres. Opposée à la doctrine de confinement de la Fondation.
+          </p>
+        </article>
+
+        <article class="dept-card" style="--dept-color:#3b82f6">
+          <span class="dept-card-accent"></span>
+          <div class="dept-card-head">
+            <div class="dept-logo">
+              <span class="dept-logo-placeholder">SOD</span>
+            </div>
+            <div>
+              <h3 class="dept-name">SOD</h3>
+              <p class="dept-code">SOD · GRU-P (lore officiel)</p>
+            </div>
+          </div>
+          <p class="dept-desc">
+            Division anomale de l'État russe — l'équivalent de la GRU-P du lore
+            officiel SCP. Une puissance étatique rivale qui exploite l'anormal à
+            ses propres fins.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rejoindre -->
+  <section class="join">
+    <div class="join-bg"></div>
+    <div class="join-content container">
+      <span class="section-tag">// Rejoindre</span>
+      <h2 class="section-title">Prêt à nous rejoindre ?</h2>
+      <div class="join-divider"></div>
+      <p class="join-text">Rejoins notre serveur Discord pour suivre l'avancement du projet et participer à la communauté.</p>
+      <div class="join-actions">
+        <a href={DISCORD} target="_blank" rel="noopener noreferrer" class="btn-primary">
+          ▶ Rejoindre le Discord
+        </a>
+      </div>
+    </div>
+  </section>
+
+</Layout>

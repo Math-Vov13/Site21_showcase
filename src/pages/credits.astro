@@ -1,0 +1,223 @@
+---
+import Layout from '../layouts/Layout.astro';
+import MagicBento from '../components/MagicBento.jsx';
+import Noise from '../components/Noise.jsx';
+import creditsData from '../data/credits.json';
+
+// Bot token requis côté build : DISCORD_BOT_TOKEN dans .env / Vercel env vars
+const TOKEN = import.meta.env.DISCORD_BOT_TOKEN as string | undefined;
+
+async function fetchAvatar(userId: string): Promise<string | null> {
+  if (!TOKEN) return null;
+  try {
+    const res = await fetch(`https://discord.com/api/v10/users/${userId}`, {
+      headers: { Authorization: `Bot ${TOKEN}` },
+    });
+    if (!res.ok) return null;
+    const data = await res.json() as { avatar?: string | null };
+    if (!data.avatar) return null;
+    const ext = data.avatar.startsWith('a_') ? 'gif' : 'png';
+    return `https://cdn.discordapp.com/avatars/${userId}/${data.avatar}.${ext}?size=128`;
+  } catch {
+    return null;
+  }
+}
+
+// Déduplique les IDs sans avatar direct et fetch en parallèle
+const allMembers = [
+  ...creditsData.founders,
+  ...creditsData.team,
+  ...creditsData.alumni,
+  ...creditsData.staff,
+];
+const idsToFetch = [...new Set(
+  allMembers.filter((m) => !m.avatar).map((m) => m.discordId)
+)];
+
+const entries = await Promise.all(
+  idsToFetch.map(async (id) => [id, await fetchAvatar(id)] as const)
+);
+const avatarMap = new Map<string, string | null>(entries);
+
+// Priorité : avatar direct dans le JSON > fetch Discord API > null (→ initiales)
+const av = (m: { avatar: string; discordId: string }): string | null =>
+  m.avatar || avatarMap.get(m.discordId) || null;
+
+// Prépare les tableaux de cards pour MagicBento
+const founderCards = creditsData.founders.map((m) => ({
+  id:       m.id,
+  username: m.username,
+  initials: m.initials,
+  avatarUrl: av(m),
+  role:     m.role,
+  clearance: m.clearance,
+  color:    m.color,
+  tags:     m.tags,
+  desc:     m.desc || null,
+  since:    m.since,
+  isAlumni: false,
+}));
+
+const teamCards = creditsData.team.map((m) => ({
+  id:       m.id,
+  username: m.username,
+  initials: m.initials,
+  avatarUrl: av(m),
+  role:     m.role,
+  clearance: m.clearance,
+  color:    m.color,
+  tags:     m.tags,
+  desc:     m.desc || null,
+  since:    m.since,
+  isAlumni: false,
+}));
+
+const alumniCards = creditsData.alumni.map((m) => ({
+  id:       m.id,
+  username: m.username,
+  initials: m.initials,
+  avatarUrl: av(m),
+  role:     m.role,
+  clearance: null,
+  color:    m.color,
+  tags:     m.tags,
+  desc:     null,
+  since:    m.since,
+  isAlumni: true,
+}));
+
+const staffCards = creditsData.staff.map((m) => ({
+  id:       m.id,
+  username: m.username,
+  initials: m.initials,
+  avatarUrl: av(m),
+  role:     m.role,
+  clearance: null,
+  color:    m.color,
+  tags:     null,
+  desc:     null,
+  since:    m.since,
+  isAlumni: false,
+}));
+---
+
+<Layout title="Crédits — Site 21 RP" description="Équipe et remerciements du projet Site 21 RP.">
+
+  <div style="position:relative">
+    <div
+      class="page-hero-img-bg"
+      style="background-image:url('/screenshots/site21-staff-team.png');opacity:0.22;overflow:hidden;bottom:-48px"
+    >
+      <Noise client:only="react" patternAlpha={60} patternRefreshInterval={2} />
+    </div>
+
+    <section class="page-hero">
+      <div class="page-hero-bg"></div>
+      <div class="container page-hero-content">
+        <span class="section-tag">// Crédits</span>
+        <h1 class="page-hero-title">
+          L'équipe
+          <span class="page-hero-highlight"> Site-21</span>
+        </h1>
+        <p class="page-hero-desc">
+          Bénévoles passionnés qui construisent Site-21 RP depuis le premier jour.
+          Fondateurs, développeurs, designers, staff — chaque contribution compte.
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <!-- ── Fondateurs & Core Team ── -->
+  <section class="page-section">
+    <div class="container">
+      <div class="section-header-row">
+        <span class="section-tag">// Direction &amp; Développement</span>
+        <h2 class="section-title">Core Team</h2>
+      </div>
+
+      <!-- Fondateurs -->
+      <p class="credits-sub-label">Fondateurs</p>
+      <MagicBento
+        client:only="react"
+        cards={founderCards}
+        variant="founders"
+        glowColor="220, 220, 220"
+        enableStars={true}
+        enableSpotlight={true}
+        enableBorderGlow={true}
+        enableMagnetism={true}
+        clickEffect={true}
+        particleCount={10}
+      />
+
+      <!-- Développeurs & Designers -->
+      <p class="credits-sub-label">Développeurs &amp; Designers</p>
+      <MagicBento
+        client:only="react"
+        cards={teamCards}
+        variant="default"
+        glowColor="220, 220, 220"
+        enableStars={true}
+        enableSpotlight={true}
+        enableBorderGlow={true}
+        enableMagnetism={true}
+        clickEffect={true}
+        particleCount={8}
+      />
+
+      <!-- Anciens membres -->
+      <p class="credits-sub-label">Anciens membres</p>
+      <MagicBento
+        client:only="react"
+        cards={alumniCards}
+        variant="alumni"
+        glowColor="100, 100, 100"
+        enableStars={false}
+        enableSpotlight={false}
+        enableBorderGlow={false}
+        enableMagnetism={false}
+        clickEffect={false}
+      />
+    </div>
+  </section>
+
+  <!-- ── Staff ── -->
+  <section class="page-section page-section--alt">
+    <div class="container">
+      <div class="section-header-row">
+        <span class="section-tag">// Modération &amp; Animation</span>
+        <h2 class="section-title">Équipe Staff</h2>
+      </div>
+      <MagicBento
+        client:only="react"
+        cards={staffCards}
+        variant="staff"
+        glowColor="220, 220, 220"
+        enableStars={true}
+        enableSpotlight={true}
+        enableBorderGlow={true}
+        enableMagnetism={true}
+        clickEffect={true}
+        particleCount={8}
+      />
+    </div>
+  </section>
+
+  <!-- ── Donateurs ── -->
+  <section class="page-section page-section--gradient">
+    <div class="container">
+      <div class="section-header-row">
+        <span class="section-tag">// Soutien</span>
+        <h2 class="section-title">Nos donateurs</h2>
+        <p class="section-desc">
+          Site-21 est un projet 100 % bénévole. Vos dons financent l'hébergement,
+          les outils et permettent à l'équipe de dédier plus de temps au projet.
+        </p>
+      </div>
+      <div class="content-placeholder">
+        <p>— Soyez le premier à soutenir le projet —</p>
+      </div>
+    </div>
+  </section>
+
+</Layout>

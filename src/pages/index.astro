@@ -1,0 +1,732 @@
+---
+import Layout from "../layouts/Layout.astro";
+import LightPillar from "../components/LightPillar.jsx";
+const DISCORD = import.meta.env.PUBLIC_DISCORD_INVITE_URL;
+const ROBLOX_G = import.meta.env.PUBLIC_ROBLOX_GROUP_URL;
+const ROBLOX_J = import.meta.env.PUBLIC_ROBLOX_GAME_URL;
+const TRELLO = import.meta.env.PUBLIC_TRELLO_URL;
+---
+
+<Layout title="Site 21 RP — Roleplay SCP sur Roblox">
+    <!-- ── HERO ── -->
+    <section class="hs-hero" aria-labelledby="hero-title">
+        <div class="hero-bg-glow" aria-hidden="true"></div>
+        <div class="hero-light-pillar" aria-hidden="true">
+            <LightPillar
+                client:only="react"
+                topColor="#cc0000"
+                bottomColor="#330000"
+                intensity={1.1}
+                rotationSpeed={0.4}
+                glowAmount={0.009}
+                pillarWidth={5.5}
+                pillarHeight={0.35}
+                noiseIntensity={0.5}
+                pillarRotation={38}
+                interactive={false}
+                mixBlendMode="normal"
+                quality="medium"
+            />
+        </div>
+        <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+        <div class="hs-hero-content">
+            <img
+                src="/logos/site21_logo.webp"
+                alt=""
+                aria-hidden="true"
+                class="hero-logo-img"
+            />
+            <p class="hs-hero-subtitle">Sécuriser. Contenir. Protéger</p>
+            <h1
+                id="hero-title"
+                class="hs-hero-title"
+                data-glitch="SCP RP SITE-21"
+            >
+                SCP RP SITE-21
+            </h1>
+            <p class="hs-hero-tagline">Un jeu SCP Rp Fr Roblox</p>
+
+            <div class="hs-hero-actions">
+                <a
+                    href={DISCORD}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn btn-discord"
+                >
+                    ◈ Rejoindre Discord
+                </a>
+                <a href="/communaute" class="btn btn-hs-primary">
+                    ▶ Découvrir la communauté
+                </a>
+            </div>
+        </div>
+
+        <div class="hero-scroll-hint" aria-hidden="true">DÉFILER</div>
+    </section>
+
+    <!-- ── STATS BAR ── -->
+    <section class="hs-stats-bar" aria-label="Statistiques">
+        <div class="hs-stats-bar-inner">
+            <div class="stat-block scroll-reveal" data-stagger="0">
+                <span class="stat-number" data-count-to="80">80</span>
+                <span class="stat-label">Membres</span>
+            </div>
+            <div class="stat-block scroll-reveal" data-stagger="1">
+                <span class="stat-number" data-count-to="6">6</span>
+                <span class="stat-label">Départements jouables</span>
+            </div>
+            <div class="stat-block scroll-reveal" data-stagger="2">
+                <span class="stat-number" data-count-to="2021">2021</span>
+                <span class="stat-label">Fondé en</span>
+            </div>
+            <div class="stat-block scroll-reveal" data-stagger="3">
+                <span class="stat-number" data-count-to="2026">2026</span>
+                <span class="stat-label">Août — Sortie</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── LE JEU — texte gauche / image droite ── -->
+    <section class="mod-section mod-section--alt">
+        <div class="container">
+            <div class="mod-split mod-reveal">
+                <div class="mod-split-text">
+                    <div class="mod-eyebrow mod-eyebrow--left">// Le Jeu</div>
+                    <h2 class="mod-title">Un roleplay SCP <em>immersif</em></h2>
+                    <p class="mod-split-desc">
+                        Enfoui sous les glaces de l'Alaska, le Site-21 abrite
+                        certaines des pires anomalies jamais recensées. Incarnez
+                        un agent de sécurité, un scientifique ou un Classe-D
+                        dans un complexe de confinement persistant — où rien
+                        n'est jamais vraiment sous contrôle.
+                    </p>
+                    <ul class="mod-split-list">
+                        <li>
+                            6 départements jouables, chacun avec sa hiérarchie
+                            et ses zones d'accès
+                        </li>
+                        <li>
+                            Brèches de confinement, protocoles et événements
+                            scénarisés
+                        </li>
+                        <li>
+                            Progression par niveaux d'accréditation — du Niveau
+                            1 au Conseil O5
+                        </li>
+                        <li>
+                            Free-RP : écrivez votre propre histoire, à votre
+                            rythme
+                        </li>
+                    </ul>
+                    <div class="mod-split-actions">
+                        <a href="/jeu" class="mod-cta">Découvrir le jeu</a>
+                        <a
+                            href={ROBLOX_J}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="mod-cta mod-cta--ghost"
+                        >
+                            ▶ Jouer — Août 2026
+                        </a>
+                    </div>
+                </div>
+                <div class="mod-split-media">
+                    <img
+                        src="/screenshots/spoil_sias.webp"
+                        alt="Vue intérieure du Site-21 — passerelle du département scientifique"
+                        class="mod-split-img"
+                        loading="lazy"
+                    />
+                    <span class="mod-split-caption"
+                        >// Capture — développement en cours</span
+                    >
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── LA COMMUNAUTÉ — image gauche / texte droite ── -->
+    <section class="mod-section">
+        <div class="container">
+            <div class="mod-split mod-split--flip mod-reveal">
+                <div class="mod-split-text">
+                    <div class="mod-eyebrow mod-eyebrow--left">
+                        // La Communauté
+                    </div>
+                    <h2 class="mod-title">
+                        Une communauté <em>passionnée</em>
+                    </h2>
+                    <p class="mod-split-desc">
+                        Née en 2021 de la rencontre de deux passionnés, la
+                        communauté Site-21 est aujourd'hui 100% française et
+                        entièrement dédiée au roleplay SCP de qualité. Le RP ne
+                        fonctionne que grâce à la communauté — et vous en faites
+                        partie.
+                    </p>
+                    <ul class="mod-split-list">
+                        <li>Plus de 80 membres actifs sur Discord</li>
+                        <li>Événements RP et communautaires réguliers</li>
+                        <li>Une équipe de modération dédiée et à l'écoute</li>
+                        <li>
+                            Des serveurs affiliés qui enrichissent l'univers
+                        </li>
+                    </ul>
+                    <div class="mod-split-actions">
+                        <a
+                            href={DISCORD}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="mod-cta"
+                        >
+                            ◈ Rejoindre le Discord
+                        </a>
+                        <a href="/communaute" class="mod-cta mod-cta--ghost"
+                            >Voir la communauté</a
+                        >
+                    </div>
+                </div>
+                <div class="mod-split-media">
+                    <img
+                        src="/screenshots/spoil_cutscene_contract.webp"
+                        alt="L'équipe du Site-21 réunie en jeu"
+                        class="mod-split-img"
+                        loading="lazy"
+                    />
+                    <span class="mod-split-caption"
+                        >// L'équipe du Site-21 — capture in-game</span
+                    >
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── COMPTE À REBOURS — 21 AOÛT ── -->
+    <section class="mod-section mod-countdown-section">
+        <div class="container">
+            <div class="mod-heading mod-heading--center mod-reveal">
+                <div class="mod-eyebrow">21 AOÛT 2026</div>
+                <h2 class="mod-title">Quelque chose <em>se prépare</em></h2>
+                <p class="mod-subtitle">
+                    Le contenu de cette annonce est <span class="redacted"
+                        >classifié niveau 5</span
+                    >. Rendez-vous le 21 août.
+                </p>
+            </div>
+
+            <div
+                class="mod-countdown mod-reveal"
+                data-mod-delay="1"
+                data-countdown-target="2026-08-21T00:00:00+02:00"
+            >
+                <div class="mod-count-block">
+                    <span class="mod-count-num" data-cd="days">--</span>
+                    <span class="mod-count-label">Jours</span>
+                </div>
+                <div class="mod-count-block">
+                    <span class="mod-count-num" data-cd="hours">--</span>
+                    <span class="mod-count-label">Heures</span>
+                </div>
+                <div class="mod-count-block">
+                    <span class="mod-count-num" data-cd="minutes">--</span>
+                    <span class="mod-count-label">Minutes</span>
+                </div>
+                <div class="mod-count-block">
+                    <span class="mod-count-num" data-cd="seconds">--</span>
+                    <span class="mod-count-label">Secondes</span>
+                </div>
+            </div>
+
+            <div class="mod-countdown-actions mod-reveal" data-mod-delay="2">
+                <a
+                    href={DISCORD}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="mod-cta"
+                >
+                    ◈ Être prévenu sur Discord
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── ACTUALITÉS ── -->
+    <section class="mod-section">
+        <div class="container container--narrow">
+            <div class="mod-heading mod-reveal">
+                <div class="mod-eyebrow mod-eyebrow--left">JOURNAL DE BORD</div>
+                <h2 class="mod-title">Actualités</h2>
+                <p class="mod-subtitle">
+                    Suivez le déploiement du Site-21 — mises à jour, annonces et
+                    rapports de terrain.
+                </p>
+            </div>
+
+            <div class="mod-news-stack">
+                <!-- Article principal — lancement du site -->
+                <article
+                    class="mod-article mod-article--featured mod-reveal"
+                    style="--ac:#f59e0b"
+                    data-mod-delay="1"
+                >
+                    <div class="mod-article-head">
+                        <span class="mod-article-date">2026-06-08</span>
+                        <span class="mod-article-badge" style="--ac:#f59e0b"
+                            >ANNONCE</span
+                        >
+                    </div>
+                    <h3 class="mod-article-title">
+                        Lancement du site vitrine — Site 21 RP
+                    </h3>
+                    <p class="mod-article-excerpt">
+                        Le site officiel du Site-21 est en ligne. Retrouvez
+                        toutes les informations sur le jeu, la communauté et le
+                        développement en un seul endroit.
+                    </p>
+                    <div class="mod-article-body">
+                        <p>
+                            Après plusieurs semaines de développement, le site
+                            vitrine de <strong>Site 21 RP</strong>
+                            est officiellement déployé. Il centralise tout ce que
+                            vous devez savoir sur le projet :
+                        </p>
+                        <p>
+                            <strong>Page Jeu</strong> — départements, anomalies, gameplay
+                            et captures d'écran.<br />
+                            <strong>Page Communauté</strong> — valeurs, groupes affiliés
+                            et liens sociaux.<br />
+                            <strong>Page Développement</strong> — roadmap complète
+                            et avancement du projet.<br />
+                            <strong>Page Crédits</strong> — l'équipe derrière le Site-21.
+                        </p>
+                        <p>
+                            Le site sera mis à jour régulièrement jusqu'au
+                            lancement officiel du jeu en
+                            <strong>août 2026</strong>. Rejoignez le Discord
+                            pour ne rater aucune annonce.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- Article secondaire — lancement du jeu -->
+                <article
+                    class="mod-article mod-reveal"
+                    style="--ac:#cc2200"
+                    data-mod-delay="2"
+                >
+                    <div class="mod-article-head">
+                        <span class="mod-article-date">2026-06-04</span>
+                        <span class="mod-article-badge" style="--ac:#cc2200"
+                            >DÉPLOIEMENT</span
+                        >
+                    </div>
+                    <h3 class="mod-article-title">
+                        Lancement prévu — Août 2026
+                    </h3>
+                    <p class="mod-article-excerpt">
+                        La fenêtre de sortie est fixée. Le Site-21 ouvre ses
+                        portes en août 2026 sur Roblox. Développement en cours —
+                        recrutement de bêta-testeurs déjà ouvert sur Discord.
+                    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── CONNEXIONS RAPIDES ── -->
+    <section class="mod-section mod-section--sm">
+        <div class="container">
+            <div class="mod-heading mod-heading--center mod-reveal">
+                <div class="mod-eyebrow">ACCÈS RAPIDE</div>
+                <h2 class="mod-title" style="font-size:clamp(1.4rem,3vw,2rem)">
+                    Rejoindre le Site-21
+                </h2>
+            </div>
+            <div class="mod-links-row mod-reveal" data-mod-delay="1">
+                <a
+                    href={DISCORD}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="mod-link-pill mod-link-pill--discord"
+                >
+                    ◈ Discord
+                </a>
+                <a
+                    href={ROBLOX_G}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="mod-link-pill mod-link-pill--roblox"
+                >
+                    ⬡ Groupe Roblox
+                </a>
+                <a
+                    href={TRELLO}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="mod-link-pill mod-link-pill--trello"
+                >
+                    ▦ Trello Dev
+                </a>
+                <a
+                    href={ROBLOX_J}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="mod-link-pill mod-link-pill--play"
+                >
+                    ▶ Jouer — AOÛT 2026
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── FAQ ── -->
+    <section class="mod-section mod-section--alt">
+        <div class="container container--narrow">
+            <div class="mod-heading mod-heading--center mod-reveal">
+                <div class="mod-eyebrow">QUESTIONS FRÉQUENTES</div>
+                <h2 class="mod-title">FAQ</h2>
+                <p class="mod-subtitle">
+                    L'essentiel sur le jeu, le développement et la communauté.
+                    Une question de plus&nbsp;? Rejoignez le Discord.
+                </p>
+            </div>
+
+            <div class="mod-faq">
+                <!-- ── Le Jeu ── -->
+                <div
+                    class="mod-faq-group mod-reveal"
+                    data-mod-delay="1"
+                    style="--fc:#cc2200"
+                >
+                    <div class="mod-faq-cat">Le Jeu</div>
+
+                    <details class="mod-faq-item">
+                        <summary class="mod-faq-q"
+                            >C'est quoi le Site-21&nbsp;?</summary
+                        >
+                        <div class="mod-faq-a">
+                            <p>
+                                Un jeu de roleplay SCP entièrement en français
+                                sur Roblox. Vous incarnez un membre de la
+                                Fondation — agent, scientifique, Classe-D — dans
+                                un complexe de confinement persistant peuplé
+                                d'anomalies.
+                            </p>
+                            <a href="/jeu" class="mod-faq-link"
+                                >Découvrir le jeu</a
+                            >
+                        </div>
+                    </details>
+
+                    <details class="mod-faq-item">
+                        <summary class="mod-faq-q"
+                            >Quels départements puis-je rejoindre&nbsp;?</summary
+                        >
+                        <div class="mod-faq-a">
+                            <p>
+                                6 départements internes jouables, chacun avec
+                                ses objectifs, sa hiérarchie et ses zones
+                                d'accès. Des groupes affiliés externes — alliés
+                                ou hostiles — complètent l'univers du Site-21.
+                            </p>
+                            <a href="/jeu" class="mod-faq-link"
+                                >Voir les départements</a
+                            >
+                        </div>
+                    </details>
+
+                    <details class="mod-faq-item">
+                        <summary class="mod-faq-q">Comment jouer&nbsp;?</summary
+                        >
+                        <div class="mod-faq-a">
+                            <p>
+                                Le Site-21 ouvre ses portes en <strong
+                                    >août 2026</strong
+                                > sur Roblox. Rejoignez le groupe Roblox dès maintenant
+                                pour être prêt au lancement.
+                            </p>
+                            <a href="/jeu" class="mod-faq-link"
+                                >En savoir plus sur le gameplay</a
+                            >
+                        </div>
+                    </details>
+                </div>
+
+                <!-- ── La Roadmap ── -->
+                <div
+                    class="mod-faq-group mod-reveal"
+                    data-mod-delay="2"
+                    style="--fc:#22d3ee"
+                >
+                    <div class="mod-faq-cat">Développement &amp; Roadmap</div>
+
+                    <details class="mod-faq-item">
+                        <summary class="mod-faq-q"
+                            >Où en est le développement&nbsp;?</summary
+                        >
+                        <div class="mod-faq-a">
+                            <p>
+                                Le projet suit une roadmap en 4 phases.
+                                Développement en cours, avec un recrutement de
+                                bêta-testeurs déjà ouvert. Le détail de chaque
+                                phase et son avancement sont sur la page
+                                développement.
+                            </p>
+                            <a href="/developpement" class="mod-faq-link"
+                                >Voir la roadmap complète</a
+                            >
+                        </div>
+                    </details>
+
+                    <details class="mod-faq-item">
+                        <summary class="mod-faq-q"
+                            >Quand sort le jeu&nbsp;?</summary
+                        >
+                        <div class="mod-faq-a">
+                            <p>
+                                La sortie est prévue pour <strong
+                                    >août 2026</strong
+                                >. Le site et le jeu sont mis à jour
+                                régulièrement jusqu'à cette date.
+                            </p>
+                            <a href="/developpement" class="mod-faq-link"
+                                >Suivre l'avancement</a
+                            >
+                        </div>
+                    </details>
+
+                    <details class="mod-faq-item">
+                        <summary class="mod-faq-q"
+                            >Comment suivre l'avancement&nbsp;?</summary
+                        >
+                        <div class="mod-faq-a">
+                            <p>
+                                La page développement détaille la roadmap, et le
+                                Trello public liste les tâches en cours en temps
+                                réel. Les annonces importantes passent par le
+                                Discord.
+                            </p>
+                            <a href="/developpement" class="mod-faq-link"
+                                >Page développement</a
+                            >
+                        </div>
+                    </details>
+                </div>
+
+                <!-- ── La Communauté ── -->
+                <div
+                    class="mod-faq-group mod-reveal"
+                    data-mod-delay="3"
+                    style="--fc:#00aa55"
+                >
+                    <div class="mod-faq-cat">La Communauté</div>
+
+                    <details class="mod-faq-item">
+                        <summary class="mod-faq-q"
+                            >Comment rejoindre la communauté&nbsp;?</summary
+                        >
+                        <div class="mod-faq-a">
+                            <p>
+                                Tout se passe sur Discord — plus de 80 membres,
+                                des salons RP, de l'entraide et les annonces
+                                officielles. La page communauté présente nos
+                                valeurs et nos groupes affiliés.
+                            </p>
+                            <a href="/communaute" class="mod-faq-link"
+                                >Découvrir la communauté</a
+                            >
+                        </div>
+                    </details>
+
+                    <details class="mod-faq-item">
+                        <summary class="mod-faq-q"
+                            >Y a-t-il des événements&nbsp;?</summary
+                        >
+                        <div class="mod-faq-a">
+                            <p>
+                                Oui — des événements RP et communautaires sont
+                                organisés régulièrement par l'équipe. Le
+                                calendrier et les annonces sont relayés sur le
+                                Discord.
+                            </p>
+                            <a href="/communaute" class="mod-faq-link"
+                                >Voir la communauté</a
+                            >
+                        </div>
+                    </details>
+
+                    <details class="mod-faq-item">
+                        <summary class="mod-faq-q"
+                            >Qui est derrière le projet&nbsp;?</summary
+                        >
+                        <div class="mod-faq-a">
+                            <p>
+                                Une équipe de bénévoles passionnés — fondateurs,
+                                développeurs, staff et anciens. Retrouvez-les
+                                tous sur la page crédits.
+                            </p>
+                            <a href="/credits" class="mod-faq-link"
+                                >Voir l'équipe</a
+                            >
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </div>
+    </section>
+</Layout>
+
+<script>
+    /* ── Particle System ── */
+    (function () {
+        const canvas = document.getElementById(
+            "particle-canvas",
+        ) as HTMLCanvasElement | null;
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
+        const cvs = canvas as HTMLCanvasElement;
+        const gfx = ctx as CanvasRenderingContext2D;
+
+        const colors = ["#cc0000", "#ff0000", "#660000", "#cc2200", "#880000"];
+        let particles: any[] = [];
+        const mouse = { x: -9999, y: -9999 };
+
+        function resize() {
+            cvs.width = cvs.offsetWidth;
+            cvs.height = cvs.offsetHeight;
+        }
+
+        function makeParticle(y?: number) {
+            return {
+                x: Math.random() * (cvs.width || 800),
+                y: y !== undefined ? y : Math.random() * (cvs.height || 600),
+                vx: (Math.random() - 0.5) * 0.25,
+                vy: -(Math.random() * 0.25 + 0.05),
+                size: 0.5 + Math.random() * 1.7,
+                opacity: 0,
+                targetOpacity: Math.random() * 0.35 + 0.05,
+                life: Math.random() * 1000,
+                color: colors[Math.floor(Math.random() * colors.length)],
+            };
+        }
+
+        resize();
+        particles = Array.from(
+            { length: window.innerWidth < 768 ? 40 : 80 },
+            () => makeParticle(),
+        );
+
+        window.addEventListener("resize", resize);
+        window.addEventListener("mousemove", (e) => {
+            const r = cvs.getBoundingClientRect();
+            mouse.x = e.clientX - r.left;
+            mouse.y = e.clientY - r.top;
+        });
+
+        function loop() {
+            gfx.clearRect(0, 0, cvs.width, cvs.height);
+            particles.forEach((p, i) => {
+                p.life += 0.5;
+                p.vx += Math.sin(p.life * 0.008 + i * 0.3) * 0.006;
+                p.x += p.vx;
+                p.y += p.vy;
+                const dx = p.x - mouse.x,
+                    dy = p.y - mouse.y;
+                const d = Math.sqrt(dx * dx + dy * dy);
+                if (d < 90 && d > 1) {
+                    const f = ((90 - d) / 90) * 0.4;
+                    p.vx += (dx / d) * f;
+                    p.vy += (dy / d) * f;
+                }
+                p.vx *= 0.98;
+                p.vy = Math.max(p.vy, -0.5);
+                p.opacity += (p.targetOpacity - p.opacity) * 0.025;
+                if (Math.abs(p.opacity - p.targetOpacity) < 0.01)
+                    p.targetOpacity = Math.random() * 0.35 + 0.05;
+                if (p.y < -10) Object.assign(p, makeParticle(cvs.height + 5));
+                if (p.x < -10) p.x = cvs.width + 5;
+                if (p.x > cvs.width + 10) p.x = -5;
+            });
+            for (let i = 0; i < particles.length; i++)
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const d = Math.sqrt(dx * dx + dy * dy);
+                    if (d < 110) {
+                        gfx.strokeStyle = `rgba(204,0,0,${(1 - d / 110) * 0.12})`;
+                        gfx.lineWidth = 0.5;
+                        gfx.beginPath();
+                        gfx.moveTo(particles[i].x, particles[i].y);
+                        gfx.lineTo(particles[j].x, particles[j].y);
+                        gfx.stroke();
+                    }
+                }
+            particles.forEach((p) => {
+                gfx.beginPath();
+                gfx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                gfx.fillStyle = p.color;
+                gfx.globalAlpha = p.opacity;
+                gfx.fill();
+            });
+            gfx.globalAlpha = 1;
+            requestAnimationFrame(loop);
+        }
+        loop();
+    })();
+
+    /* ── Compte à rebours 21 août ── */
+    (function () {
+        const root = document.querySelector<HTMLElement>(
+            "[data-countdown-target]",
+        );
+        if (!root) return;
+        const target = new Date(root.dataset.countdownTarget || "").getTime();
+        if (Number.isNaN(target)) return;
+
+        const fields = ["days", "hours", "minutes", "seconds"] as const;
+        const els = new Map(
+            fields.map((f) => [
+                f,
+                root.querySelector<HTMLElement>(`[data-cd="${f}"]`),
+            ]),
+        );
+        const pad = (n: number) => String(n).padStart(2, "0");
+
+        function tick() {
+            const diff = Math.max(0, target - Date.now());
+            const days = Math.floor(diff / 86400000);
+            const hours = Math.floor((diff % 86400000) / 3600000);
+            const minutes = Math.floor((diff % 3600000) / 60000);
+            const seconds = Math.floor((diff % 60000) / 1000);
+            const values = { days, hours, minutes, seconds };
+            fields.forEach((f) => {
+                const el = els.get(f);
+                if (el)
+                    el.textContent =
+                        f === "days" ? String(values[f]) : pad(values[f]);
+            });
+        }
+
+        tick();
+        setInterval(tick, 1000);
+    })();
+
+    /* ── Modern scroll reveal ── */
+    (function () {
+        const els = document.querySelectorAll<HTMLElement>(".mod-reveal");
+        if (!els.length) return;
+        const obs = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((e) => {
+                    if (e.isIntersecting) {
+                        e.target.classList.add("is-visible");
+                        obs.unobserve(e.target);
+                    }
+                });
+            },
+            { threshold: 0.1 },
+        );
+        els.forEach((el) => obs.observe(el));
+    })();
+</script>
