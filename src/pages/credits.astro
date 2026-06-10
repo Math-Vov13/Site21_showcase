@@ -6,6 +6,7 @@ import creditsData from '../data/credits.json';
 
 // Bot token requis côté build : DISCORD_BOT_TOKEN dans .env / Vercel env vars
 const TOKEN = import.meta.env.DISCORD_BOT_TOKEN as string | undefined;
+const DISCORD = import.meta.env.PUBLIC_DISCORD_INVITE_URL;
 
 async function fetchAvatar(userId: string): Promise<string | null> {
   if (!TOKEN) return null;
@@ -216,6 +217,28 @@ const staffCards = creditsData.staff.map((m) => ({
       </div>
       <div class="content-placeholder">
         <p>— Soyez le premier à soutenir le projet —</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rejoindre l'équipe -->
+  <section class="join">
+    <div class="join-bg"></div>
+    <div class="join-content container">
+      <span class="section-tag">// Rejoindre l'équipe</span>
+      <h2 class="section-title">Et si c'était vous ?</h2>
+      <div class="join-divider"></div>
+      <p class="join-text">
+        Le Site-21 recrute des développeurs et des alpha testeurs.
+        Votre nom pourrait bien rejoindre cette page.
+      </p>
+      <div class="join-actions">
+        <a href="/developpement#recrutements" class="btn-primary">
+          ▶ Voir les recrutements
+        </a>
+        <a href={DISCORD} target="_blank" rel="noopener noreferrer" class="btn-secondary">
+          ◈ Rejoindre le Discord
+        </a>
       </div>
     </div>
   </section>

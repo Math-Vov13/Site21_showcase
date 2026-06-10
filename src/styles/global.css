@@ -923,6 +923,13 @@
   cursor: not-allowed; opacity: 0.45;
   border-style: dashed;
 }
+.recruit-note {
+  margin-top: 0.75rem;
+  font-family: var(--font-mono); font-size: 0.68rem;
+  color: var(--text-dim); letter-spacing: 0.04em;
+}
+.recruit-note a { color: var(--rc, var(--red)); text-decoration: underline; text-underline-offset: 2px; }
+.recruit-note a:hover { color: var(--text-bright); }
 
 /* ── Dev roster (développement) ── */
 .dev-roster {
@@ -1138,6 +1145,34 @@
   border: 1px solid rgba(204,0,0,0.2);
   box-shadow: 0 0 40px rgba(0,0,0,0.5);
   max-width: 100%;
+}
+
+/* ── Discord duo (argumentaire + widget) ── */
+.discord-duo {
+  display: grid; grid-template-columns: 1fr 380px;
+  gap: 3rem; align-items: center;
+  margin-top: 2.5rem;
+}
+.discord-duo .discord-widget-wrap { margin-top: 0; }
+.discord-pitch-lead {
+  font-size: 0.95rem; color: var(--text-muted); line-height: 1.8;
+  max-width: 540px;
+}
+.discord-points {
+  list-style: none; margin: 1.5rem 0 2rem; padding: 0;
+  display: flex; flex-direction: column; gap: 0.8rem;
+}
+.discord-points li {
+  position: relative; padding-left: 1.3rem;
+  font-size: 0.88rem; color: var(--text-muted); line-height: 1.7;
+}
+.discord-points li::before {
+  content: '◈'; position: absolute; left: 0; top: 4px;
+  color: var(--red-primary); font-size: 0.7rem;
+}
+.discord-point-term { color: var(--text-bright); font-weight: 600; }
+@media (max-width: 900px) {
+  .discord-duo { grid-template-columns: 1fr; gap: 2rem; }
 }
 
 /* ── Credits — shared ── */

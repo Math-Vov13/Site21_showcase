@@ -170,16 +170,45 @@ const staffCards = creditsData.staff.map((m) => ({
         <h2 class="section-title">Serveur Discord</h2>
         <p class="section-desc">Rejoins la communauté, suis l'avancement du projet et échange avec l'équipe.</p>
       </div>
-      <div class="discord-widget-wrap">
-        <iframe
-          src="https://discord.com/widget?id=856222991386017813&theme=dark"
-          width="350"
-          height="500"
-          allowtransparency="true"
-          frameborder="0"
-          sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
-          title="Serveur Discord Site 21"
-        ></iframe>
+      <div class="discord-duo">
+        <div class="discord-pitch">
+          <p class="discord-pitch-lead">
+            Le Discord est le cœur battant du Site-21 — c'est là que tout se
+            passe, bien avant l'ouverture des portes du jeu.
+          </p>
+          <ul class="discord-points">
+            <li>
+              <span class="discord-point-term">Annonces</span> — l'avancement du
+              développement et les dates clés, en avant-première.
+            </li>
+            <li>
+              <span class="discord-point-term">Communauté</span> — salons RP,
+              discussions lore et entraide entre joueurs.
+            </li>
+            <li>
+              <span class="discord-point-term">Événements</span> — animations
+              régulières organisées par le staff.
+            </li>
+            <li>
+              <span class="discord-point-term">Recrutements</span> — alpha tests
+              et candidatures dev annoncés ici en premier.
+            </li>
+          </ul>
+          <a href={DISCORD} target="_blank" rel="noopener noreferrer" class="btn-primary">
+            ◈ Rejoindre le Discord
+          </a>
+        </div>
+        <div class="discord-widget-wrap">
+          <iframe
+            src="https://discord.com/widget?id=856222991386017813&theme=dark"
+            width="350"
+            height="500"
+            allowtransparency="true"
+            frameborder="0"
+            sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
+            title="Serveur Discord Site 21"
+          ></iframe>
+        </div>
       </div>
     </div>
   </section>
@@ -258,7 +287,7 @@ const staffCards = creditsData.staff.map((m) => ({
             </div>
           </div>
           <p class="dept-desc">
-            Faction dissidente née d'anciens agents de la Fondation. Idéologie
+            Organisation dissidente née d'anciens agents de la Fondation. Idéologie
             militante et méthodes radicales — un adversaire redouté sur le
             terrain.
           </p>

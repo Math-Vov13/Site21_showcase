@@ -119,10 +119,12 @@ const isActive = (href: string) =>
 (function () {
   const hud = document.getElementById('scp-hud');
   if (!hud) return;
+  const utcOffset = -new Date().getTimezoneOffset() / 60;
+  const utcLabel = `UTC${utcOffset >= 0 ? '+' : ''}${utcOffset}`;
   hud.innerHTML = `
     <div class="hud-tr">
       <span id="hud-clock">--:--:--</span>
-      <span>UTC+1</span>
+      <span>${utcLabel}</span>
     </div>
     <div class="hud-bl">
       <span>NIV. SÉCURITÉ: <span style="color:var(--red-primary)">ROUGE</span></span>

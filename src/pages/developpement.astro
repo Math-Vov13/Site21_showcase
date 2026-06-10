@@ -6,6 +6,7 @@ import Noise from "../components/Noise.jsx";
 import creditsData from "../data/credits.json";
 
 const TRELLO = import.meta.env.PUBLIC_TRELLO_URL;
+const DISCORD = import.meta.env.PUBLIC_DISCORD_INVITE_URL;
 
 const TOKEN = import.meta.env.DISCORD_BOT_TOKEN as string | undefined;
 async function fetchAvatar(userId: string): Promise<string | null> {
@@ -73,7 +74,7 @@ const devCards = devMembers.map((m) => ({
             <div class="container page-hero-content">
                 <span class="section-tag">// Développement</span>
                 <h1 class="page-hero-title">
-                    Le coin
+                    Le Pôle
                     <span class="page-hero-highlight"> Dev</span>
                 </h1>
                 <p class="page-hero-desc">
@@ -445,7 +446,7 @@ const devCards = devMembers.map((m) => ({
     </section>
 
     <!-- ── Recrutements ── -->
-    <section class="page-section page-section--gradient">
+    <section class="page-section page-section--gradient" id="recrutements">
         <div class="container">
             <div class="section-header-row">
                 <span class="section-tag">// Rejoindre l'équipe</span>
@@ -486,6 +487,14 @@ const devCards = devMembers.map((m) => ({
                     >
                         Postuler — formulaire à venir
                     </button>
+                    <p class="recruit-note">
+                        En attendant le formulaire, présente-toi sur
+                        <a
+                            href={DISCORD}
+                            target="_blank"
+                            rel="noopener noreferrer">le Discord</a
+                        >.
+                    </p>
                 </article>
 
                 <!-- Alpha testeurs -->
@@ -516,6 +525,14 @@ const devCards = devMembers.map((m) => ({
                     >
                         Candidater — formulaire à venir
                     </button>
+                    <p class="recruit-note">
+                        Les annonces de recrutement passent par
+                        <a
+                            href={DISCORD}
+                            target="_blank"
+                            rel="noopener noreferrer">le Discord</a
+                        >.
+                    </p>
                 </article>
             </div>
         </div>

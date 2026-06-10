@@ -6,6 +6,8 @@ import DotGrid from "../components/DotGrid.jsx";
 
 // Wiki SCP officiel (Fondation francophone) — cible des boutons « En savoir plus »
 const SCP_WIKI = "https://fondationscp.wikidot.com/";
+const DISCORD = import.meta.env.PUBLIC_DISCORD_INVITE_URL;
+const ROBLOX_J = import.meta.env.PUBLIC_ROBLOX_GAME_URL;
 ---
 
 <Layout
@@ -797,6 +799,41 @@ const SCP_WIKI = "https://fondationscp.wikidot.com/";
                         à évolution
                     </p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rejoindre -->
+    <section class="join">
+        <div class="join-bg"></div>
+        <div class="join-content container">
+            <span class="section-tag">// Accès au Site</span>
+            <h2 class="section-title">Prêt à franchir le sas ?</h2>
+            <div class="join-divider"></div>
+            <p class="join-text">
+                Le Site-21 ouvre ses portes en août 2026. Rejoins le Discord dès
+                maintenant pour suivre le développement — et être là le jour J.
+            </p>
+            <div class="join-actions">
+                <a
+                    href={DISCORD}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-primary"
+                >
+                    ◈ Rejoindre le Discord
+                </a>
+                <a
+                    href={ROBLOX_J}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-secondary"
+                >
+                    ▶ Le jeu sur Roblox
+                </a>
+                <a href="/developpement" class="btn-secondary">
+                    Suivre la roadmap →
+                </a>
             </div>
         </div>
     </section>
