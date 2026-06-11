@@ -6,12 +6,82 @@ import Footer from '../components/Footer.astro';
 interface Props {
   title?: string;
   description?: string;
+  ogImage?: string;
+  keywords?: string;
+  type?: 'website' | 'article';
+  noIndex?: boolean;
+  /** JSON-LD schema override. Defaults to WebSite + Organization + WebPage. */
+  schema?: object;
 }
+
+const SITE_URL = 'https://scp-site21.fr';
+const SITE_NAME = 'Site 21 RP';
 
 const {
   title = 'Site 21 RP — Roleplay SCP sur Roblox',
-  description = 'Communauté Roblox de roleplay SCP. Rejoignez le Site-21 et incarnez un agent de la Fondation SCP.',
+  description = 'Rejoignez la communauté Roblox de roleplay SCP francophone. Incarnez un agent de la Fondation SCP dans le Site-21, un jeu immersif et sérieux en français.',
+  ogImage = '/logos/site21_logo.webp',
+  keywords = 'Site 21, SCP, Roblox, roleplay, RP, fondation SCP, jeu roblox, communauté française, SCP RP, science-fiction, horreur',
+  type = 'website',
+  noIndex = false,
+  schema,
 } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, SITE_URL).href;
+const ogImageAbsolute = ogImage.startsWith('http') ? ogImage : `${SITE_URL}${ogImage}`;
+
+const defaultSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: SITE_NAME,
+      description: 'Communauté Roblox de roleplay SCP francophone',
+      inLanguage: 'fr-FR',
+    },
+    {
+      '@type': 'Organization',
+      '@id': `${SITE_URL}/#organization`,
+      name: SITE_NAME,
+      url: SITE_URL,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${SITE_URL}/logos/site21_logo.webp`,
+        width: 512,
+        height: 512,
+      },
+      sameAs: [
+        'https://discord.gg/ArJuw7QUyX',
+        'https://www.roblox.com/communities/10628003/SCP-Site-21#!/about',
+      ],
+    },
+    {
+      '@type': 'VideoGame',
+      '@id': `${SITE_URL}/#game`,
+      name: 'Site 21 RP',
+      description:
+        'Jeu de roleplay SCP sur Roblox. Incarnez un agent de la Fondation SCP dans un environnement immersif et sécurisé.',
+      url: SITE_URL,
+      genre: ['Role-playing', 'Horror', 'Science Fiction'],
+      gamePlatform: 'Roblox',
+      inLanguage: 'fr-FR',
+      publisher: { '@id': `${SITE_URL}/#organization` },
+    },
+    {
+      '@type': 'WebPage',
+      '@id': `${canonicalURL}#webpage`,
+      url: canonicalURL,
+      name: title,
+      description: description,
+      isPartOf: { '@id': `${SITE_URL}/#website` },
+      inLanguage: 'fr-FR',
+    },
+  ],
+};
+
+const jsonLd = schema ?? defaultSchema;
 ---
 
 <!doctype html>
@@ -19,9 +89,57 @@ const {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={description} />
+
+    <!-- Primary meta -->
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="author" content={SITE_NAME} />
+    <meta name="generator" content={Astro.generator} />
+    {noIndex && <meta name="robots" content="noindex, nofollow" />}
+    {!noIndex && <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />}
+
+    <!-- Canonical -->
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Sitemap -->
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageAbsolute} />
+    <meta property="og:image:alt" content={`Logo ${SITE_NAME}`} />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+    <meta property="og:locale" content="fr_FR" />
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageAbsolute} />
+    <meta name="twitter:image:alt" content={`Logo ${SITE_NAME}`} />
+
+    <!-- Theme & app -->
+    <meta name="theme-color" content="#0d0d0d" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="application-name" content={SITE_NAME} />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/logos/site21_logo.webp" />
+
+    <!-- Preconnect for Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- JSON-LD Structured Data -->
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
     <Header />

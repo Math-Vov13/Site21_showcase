@@ -47,9 +47,13 @@ The `PUBLIC_` prefix makes variables available at build time in `.astro` files v
 
 **Astro 6** (static output, no SSR) + **React 19** (for interactive/WebGL components) + **Tailwind v4** (via `@tailwindcss/vite`, no `tailwind.config.*` file).
 
-Deployment target: Vercel (deployed via `vercel` CLI — no `vercel.json` in this repo). No Docker, no database, no API routes.
+Node ≥ 22.12.0 required (enforced in `package.json` engines field).
 
-Key packages: `gsap` (animations), `three` (WebGL), `motion` (Framer Motion v12 — import from `motion/react`, not `framer-motion`), `radix-ui`.
+Deployment target: **o2switch** shared hosting — push to `main` triggers `.github/workflows/deploy.yml` which runs `pnpm astro check`, `pnpm build`, then rsync to the server over SSH (`--delete`, preserving `.htaccess` and `.well-known`). No Docker, no database, no API routes.
+
+Required GitHub Actions secrets: `DISCORD_BOT_TOKEN`, `O2SWITCH_HOST`, `O2SWITCH_USER`, `O2SWITCH_PATH`, `O2SWITCH_SSH_KEY`.
+
+Key packages: `gsap` (animations), `three` (WebGL), `motion` (Framer Motion v12 — import from `motion/react`, not `framer-motion`), `radix-ui`, `@astrojs/sitemap` (generates `/sitemap-index.xml` at build).
 
 ## Architecture
 
@@ -57,8 +61,15 @@ Key packages: `gsap` (animations), `three` (WebGL), `motion` (Framer Motion v12 
 
 ```
 src/
-  styles/global.css          ← single CSS entry point (all design systems, 2200+ lines)
-  layouts/Layout.astro        ← wraps every page: imports global.css, Header, Footer
+  styles/
+    global.css                ← CSS entry point: imports only (order = cascade order)
+    tokens.css                ← @theme Tailwind, shadcn tokens, :root custom properties
+    base.css                  ← resets, global typography, Tailwind utilities
+    landing.css               ← LandingPage system (inner pages)
+    homesite.css              ← HomeSite system (nav, home hero, footer)
+    modern.css                ← home page modern sections (mod-*)
+    responsive.css            ← transverse mobile adaptations (loaded last)
+  layouts/Layout.astro        ← wraps every page: SEO head, imports global.css, Header, Footer
   data/
     config.json               ← site metadata, social links, game release date (not imported in code)
     credits.json              ← all staff data: founders, team, alumni, staff arrays
@@ -81,15 +92,49 @@ src/
 public/
   logos/                      ← brand assets served at /logos/*
   screenshots/                ← game screenshots served at /screenshots/*
+  robots.txt                  ← allows all bots incl. LLM crawlers; points to sitemap
+  llms.txt                    ← machine-readable site summary for LLM crawlers (llmstxt.org spec)
 ```
 
 **Images rule:** static assets referenced by CSS `url()` or HTML `src` go in `public/` (served at `/path`). Assets imported via JS `import` go in `src/assets/` (Vite-processed, fingerprinted). `ScreenshotCarousel.jsx` uses `/screenshots/` public paths.
 
-### CSS architecture — three layered systems in `global.css`
+### SEO & canonical URLs
 
-`global.css` is one large file with three stacked design systems. Import order matters:
+Production URL: `https://scp-site21.fr` — hardcoded in `astro.config.mjs` as `site`. This drives canonical URL generation and the sitemap.
 
-1. **Tailwind v4 + shadcn** — `@import "tailwindcss"` + `@import "shadcn/tailwind.css"` + `@theme {}` with unified tokens. shadcn's `:root` is overridden immediately after with dark-mode values so the site is dark-first without a `.dark` class on `<html>`.
+**`Layout.astro` props:**
+```ts
+interface Props {
+  title?: string;        // defaults to full site title
+  description?: string;  // defaults to main site description
+  ogImage?: string;      // path or absolute URL — defaults to /logos/site21_logo.webp
+  keywords?: string;     // comma-separated — defaults to site-wide keywords
+  type?: 'website' | 'article';  // og:type — defaults to 'website'
+  noIndex?: boolean;     // adds noindex,nofollow — defaults to false
+  schema?: object;       // JSON-LD override — defaults to WebSite+Organization+VideoGame+WebPage graph
+}
+```
+
+Canonical URL is generated automatically from `Astro.url.pathname` + the `site` config — no need to pass it manually. The `ogImage` prop accepts either a root-relative path (e.g. `/screenshots/scene.webp`) or an absolute URL; Layout converts it to absolute automatically.
+
+Each page passes its own `title`, `description`, `keywords`, and optionally `ogImage` to `<Layout>`. The default JSON-LD schema (`@graph`) embeds `WebSite`, `Organization`, `VideoGame`, and `WebPage` nodes; pass `schema` to override entirely for a page that needs a different schema type.
+
+`@astrojs/sitemap` generates `dist/sitemap-index.xml` + `dist/sitemap-0.xml` at build — do not create these files manually. The 404 page is excluded via the `filter` option in `astro.config.mjs`.
+
+### CSS architecture — split files, one entry point
+
+`global.css` contains **only `@import` statements** — the import order IS the cascade order, do not reorder (e.g. `.container` is redefined by `homesite.css` after `landing.css`). The design systems live in separate files under `src/styles/`:
+
+| File | Responsibility |
+|---|---|
+| `tokens.css` | `@theme` Tailwind tokens, shadcn `:root` dark override, shared `:root` custom properties |
+| `base.css` | resets, global typography (`@layer base`), Tailwind utilities (`@layer utilities`) |
+| `landing.css` | LandingPage system — inner pages |
+| `homesite.css` | HomeSite system — Header, index hero, Footer |
+| `modern.css` | home page `mod-*` sections (splits, countdown, FAQ, news) |
+| `responsive.css` | transverse mobile rules — loaded **last** so its equal-specificity overrides win |
+
+1. **Tailwind v4 + shadcn** — `@import "tailwindcss"` + `@import "shadcn/tailwind.css"` in `global.css`, tokens in `tokens.css`. shadcn's `:root` is overridden with dark-mode values so the site is dark-first without a `.dark` class on `<html>`.
 
 2. **LandingPage system** (CSS classes, no Tailwind) — `.container`, `.section-tag`, `.section-title`, `.page-hero`, `.page-hero-img-bg`, `.page-section`, `.section-header-row`, `.btn-secondary`, `.about-card`, `.roadmap-v2-*`, `.sc-carousel-*`, etc. Used by all inner pages. The `/jeu` page adds: `.lore-*` (narrative prose — `.lore-block`, `.lore-lead`, `.lore-prose`, `.lore-quote`, `.lore-rules`/`.lore-rule-term`), `.dept-grid`/`.dept-card`/`.dept-logo` (cartes de **départements** — internes à la Fondation — avec logo ou initiales en placeholder ; couleur d'accent par carte via la variable inline `--dept-color`), and `.da-layout` (2-col Direction-Artistique + carousel, collapses < 860px). **Vocabulaire :** parler de **départements** (entités internes : O5, DS&E, DJI, ASIA…) et de **groupes affiliés** (entités externes alliées ou hostiles : MS, IC…). Ne pas employer le terme « faction ».
 
@@ -101,7 +146,7 @@ public/
 
 **Loaded Google Fonts:** Rajdhani (400–700), Share Tech Mono, Roboto, VT323, Inter — plus `@fontsource-variable/geist` (self-hosted).
 
-**When adding CSS:** put it in `global.css` at the end of the relevant system. Each component that ships its own CSS (`MagicBento.css`, `LightPillar.css`, etc.) is scoped to that component — import it from the JSX file.
+**When adding CSS:** put it in the file of the relevant system (`landing.css` for inner pages, `homesite.css` for nav/footer/home hero, `modern.css` for `mod-*` home sections). Component-specific media queries stay next to the component's rules; **transverse** mobile rules (vertical rhythm, tap targets, fluid grids) go in `responsive.css`. Each component that ships its own CSS (`MagicBento.css`, `LightPillar.css`, etc.) is scoped to that component — import it from the JSX file.
 
 **shadcn style:** `radix-nova` (set in `components.json`). Components use `cssVariables: true`, `iconLibrary: lucide`.
 
@@ -258,7 +303,7 @@ Status colour presets: done `#4ade80` · active `#22d3ee` · upcoming `#6b7280` 
 
 Dernière `<section class="page-section page-section--gradient">` de `developpement.astro`, juste avant `</Layout>`. Une `.recruit-grid` (auto-fit `minmax(300px,1fr)`) avec deux `.recruit-card` : **Développeurs** (candidature spontanée, accent cyan `#22d3ee`) et **Alpha testeurs** (places limitées, accent orange `#f97316`). Chaque carte définit sa couleur d'accent inline via `style="--rc:…"`.
 
-**CTA — état actuel :** les liens de formulaire n'existent pas encore. Les CTA sont des `<button type="button" class="recruit-btn" disabled aria-disabled="true">`. Quand une URL de formulaire est fournie, remplacer le `<button>` par `<a href="…" class="recruit-btn" target="_blank" rel="noopener noreferrer">` (sans `disabled`). Styles `.recruit-*` dans `global.css`, juste avant `.dev-roster`.
+**CTA — état actuel :** les liens de formulaire n'existent pas encore. Les CTA sont des `<button type="button" class="recruit-btn" disabled aria-disabled="true">`. Quand une URL de formulaire est fournie, remplacer le `<button>` par `<a href="…" class="recruit-btn" target="_blank" rel="noopener noreferrer">` (sans `disabled`). Styles `.recruit-*` dans `landing.css`, juste avant `.dev-roster`.
 
 ### Path alias
 

@@ -1,0 +1,41 @@
+name: Deploy to o2switch
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm astro check
+
+      - run: pnpm build
+        env:
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+
+      - name: Deploy dist/ via rsync over SSH
+        uses: burnett01/rsync-deployments@7.1.0
+        with:
+          # --delete garde le serveur identique à dist/ ; .htaccess et .well-known
+          # sont exclus pour ne pas écraser la config Apache côté o2switch
+          switches: -avzr --delete --exclude='.htaccess' --exclude='.well-known'
+          path: dist/
+          remote_path: ${{ secrets.O2SWITCH_PATH }}
+          remote_host: ${{ secrets.O2SWITCH_HOST }}
+          remote_user: ${{ secrets.O2SWITCH_USER }}
+          remote_key: ${{ secrets.O2SWITCH_SSH_KEY }}

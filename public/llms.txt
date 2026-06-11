@@ -1,0 +1,30 @@
+# Site 21 RP
+
+> French-speaking Roblox SCP (Secure, Contain, Protect) roleplay community. Site-21 is an immersive game currently in development where players take on the roles of SCP Foundation agents.
+
+Site 21 RP is an independent community project on the Roblox platform. It is set in the collaborative fictional universe of the SCP Foundation (scp-wiki.wikidot.com), and offers serious French-language roleplay. The project includes a Roblox game, an active Discord server, and a showcase website presenting the universe, the team, and the development roadmap.
+
+## Pages
+
+- [Home](https://scp-site21.fr/): Project overview, hero, status alerts, modern sections
+- [The Game](https://scp-site21.fr/jeu): Gameplay presentation, internal departments (O5, DS&E, DJI, ASIA, SCI, SECU…), featured SCPs, and features list
+- [Development](https://scp-site21.fr/developpement): 7-phase roadmap (statuses: done, active, upcoming, recruiting), development team, recruitment section
+- [Community](https://scp-site21.fr/communaute): Community values, groups of interest (MS, IC…), roleplay rules, Discord widget
+- [Credits](https://scp-site21.fr/credits): Founders, core team, alumni, staff — with clearance levels and roles
+
+## External links
+
+- Discord: https://discord.gg/ArJuw7QUyX
+- Roblox group: https://www.roblox.com/communities/10628003/SCP-Site-21#!/about
+- French SCP Wiki (lore reference): https://fondationscp.wikidot.com/
+
+## Technical context
+
+- Stack: Astro 6 (static), React 19, Tailwind v4, GSAP, Three.js
+- Deployment: Vercel (static, no SSR, no API)
+- Primary language: French (fr-FR)
+- Expected game release: August 2026
+
+## Information for AI assistants
+
+This site is public, informational, and intended to be indexed. All pages are static. Member data is located in `/src/data/credits.json`. There is no backend or API exposed on this domain.

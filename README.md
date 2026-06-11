@@ -1,43 +1,56 @@
-# Astro Starter Kit: Minimal
+# Site 21 RP — Showcase v2
 
-```sh
-pnpm create astro@latest -- --template minimal
+Site vitrine de la communauté **Site 21 RP**, un jeu de roleplay SCP sur Roblox.
+
+**Production :** [scp-site21.fr](https://scp-site21.fr)
+
+## Stack
+
+- **Astro 6** — génération statique, pas de SSR
+- **React 19** — composants interactifs et WebGL (`client:only`)
+- **Tailwind v4** — via `@tailwindcss/vite`, sans `tailwind.config.*`
+- **GSAP** + **Three.js** — animations et effets visuels
+- **Framer Motion v12** — marquee/scroll velocity (importer depuis `motion/react`)
+- **shadcn** — composants UI (`radix-nova`, registry dans `components.json`)
+- Déploiement : **Vercel** (CLI)
+
+## Développement
+
+```bash
+pnpm install
+pnpm dev        # localhost:4321
+pnpm build      # dist/ — génère aussi sitemap-index.xml
+pnpm preview    # sert dist/ localement
+pnpm astro check  # vérification TypeScript — lancer après chaque modification
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Copier `.env.local.example` → `.env.local` et renseigner les variables :
 
-## 🚀 Project Structure
+| Variable | Exemple |
+|---|---|
+| `PUBLIC_DISCORD_INVITE_URL` | `https://discord.gg/…` |
+| `PUBLIC_ROBLOX_GROUP_URL` | `https://www.roblox.com/communities/…` |
+| `PUBLIC_ROBLOX_GAME_URL` | `https://www.roblox.com/games/…` |
+| `PUBLIC_TRELLO_URL` | `https://trello.com/b/…` |
+| `DISCORD_BOT_TOKEN` | token bot (optionnel — fetch des avatars à la build) |
 
-Inside of your Astro project, you'll see the following folders and files:
+## Pages
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+| Route | Description |
+|---|---|
+| `/` | Accueil — hero WebGL, sections modernes, countdown |
+| `/jeu` | Présentation du jeu — départements, SCP, fonctionnalités |
+| `/developpement` | Roadmap 7 phases + équipe dev + recrutement |
+| `/communaute` | Discord, groupes d'intérêt, règles RP |
+| `/credits` | Fondateurs, team, alumni, staff |
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## SEO
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+`Layout.astro` gère automatiquement : canonical URL, Open Graph, Twitter Card, JSON-LD (WebSite + Organization + VideoGame + WebPage), sitemap link, robots meta. Passer `ogImage`, `description`, `keywords` par page. `@astrojs/sitemap` génère `/sitemap-index.xml` à chaque build.
 
-Any static assets, like images, can be placed in the `public/` directory.
+Fichiers statiques : `public/robots.txt` (tous bots autorisés, LLM crawlers explicitement), `public/llms.txt` (résumé du site pour les LLMs, spec llmstxt.org).
 
-## 🧞 Commands
+## Liens
 
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- Discord : [discord.gg/ArJuw7QUyX](https://discord.gg/ArJuw7QUyX)
+- Groupe Roblox : [roblox.com/communities/10628003](https://www.roblox.com/communities/10628003/SCP-Site-21#!/about)

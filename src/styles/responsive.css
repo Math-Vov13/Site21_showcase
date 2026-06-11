@@ -1,0 +1,94 @@
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE — adaptations mobile & petits écrans (transverses)
+
+   Importé en dernier : ses règles gagnent à spécificité égale.
+   Les media queries propres à UN composant restent dans le fichier
+   de son système ; ici on traite les problèmes transverses :
+   grilles fluides, rythme vertical, zones de tap, overflow < 360px.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Grilles fluides ──
+   minmax(280px+, 1fr) déborde quand l'écran fait moins de
+   min + 2×padding du container (~360px). min(Npx, 100%) supprime
+   le plancher quand la colonne est plus étroite. */
+.dept-grid     { grid-template-columns: repeat(auto-fit,  minmax(min(280px, 100%), 1fr)); }
+.recruit-grid  { grid-template-columns: repeat(auto-fit,  minmax(min(300px, 100%), 1fr)); }
+.dev-roster    { grid-template-columns: repeat(auto-fill, minmax(min(270px, 100%), 1fr)); }
+.credits-grid           { grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr)); }
+.credits-grid--founders { grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); }
+.credits-grid--staff    { grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr)); }
+
+/* ── Hero accueil : hauteur stable malgré la barre d'adresse mobile ── */
+@supports (height: 100svh) {
+  .hs-hero { min-height: 100svh; }
+}
+
+/* ── Tablette & mobile ── */
+@media (max-width: 768px) {
+  /* Rythme vertical resserré — les paddings desktop (5-7rem)
+     créent des déserts de scroll sur petit écran */
+  .page-section    { padding: 3.5rem 0; }
+  .mod-section     { padding: 4rem 0; }
+  .mod-section--sm { padding: 2.5rem 0; }
+  .join            { padding: 4.5rem 0; }
+  .page-hero       { padding-top: 104px; padding-bottom: 2.75rem; }
+
+  /* Header de section avec bouton d'action (ex. Trello) : empilé */
+  .section-header-row--action {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  /* Articles d'actualités : padding réduit */
+  .mod-article,
+  .mod-article--featured { padding: 1.5rem 1.25rem; }
+
+  /* Carte O5 (featured) : logo et titre moins massifs */
+  .dept-logo--xl { width: 104px; height: 104px; }
+  .dept-card--feature .dept-name { font-size: 1.6rem; }
+
+  /* Bandes cinéma latérales : 100px masquent trop d'image */
+  .cinema-wrap::before,
+  .cinema-wrap::after { width: 36px; }
+}
+
+/* ── Petits mobiles ── */
+@media (max-width: 480px) {
+  /* Gouttières réduites : 32px de chaque côté est trop sur 360px */
+  .container { padding: 0 var(--s-lg); }
+
+  /* CTA pleine largeur — zone de pouce et hiérarchie claire */
+  .hs-hero-actions .btn,
+  .mod-split-actions .mod-cta,
+  .mod-countdown-actions .mod-cta,
+  .join-actions .btn-primary,
+  .join-actions .btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Pills d'accès rapide : 2 par ligne, centrées */
+  .mod-link-pill {
+    flex: 1 1 calc(50% - 0.5rem);
+    justify-content: center;
+    padding: 0.8rem 1rem;
+  }
+
+  /* Compte à rebours : grille 2×2 au lieu d'un wrap flex inégal */
+  .mod-countdown {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+  }
+  .mod-count-block { min-width: 0; width: 100%; }
+
+  /* Hero accueil : logo plus discret */
+  .hero-logo-img { width: 92px; height: 92px; }
+
+  /* Carousel : flèches plus compactes */
+  .sc-carousel-arrow { width: 2.25rem; height: 2.25rem; font-size: 1.5rem; }
+
+  /* Widget Discord : hauteur réduite */
+  .discord-widget-wrap iframe { height: 420px; }
+}
